@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClipForge - Precision Video Clip Downloader</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+    body {
+      background:
+        radial-gradient(1300px 600px at 90% -10%, rgba(56, 189, 248, 0.28), transparent 40%),
+        radial-gradient(1000px 500px at -10% 10%, rgba(139, 92, 246, 0.28), transparent 42%),
+        #04050c;
+    }
+    .timeline-track {
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(148, 163, 184, 0.35), rgba(148, 163, 184, 0.18));
+      position: relative;
+    }
+    .timeline-selection {
+      position: absolute;
+      top: 0;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(56, 189, 248, 0.95), rgba(99, 102, 241, 0.95));
+    }
+    .timeline-handle {
+      position: absolute;
+      top: 50%;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      transform: translate(-50%, -50%);
+      border: 2px solid rgba(255, 255, 255, 0.95);
+      background: #020617;
+      cursor: ew-resize;
+      touch-action: none;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.26);
+      transition: box-shadow 180ms ease;
+    }
+    .timeline-handle:active {
+      box-shadow: 0 0 0 5px rgba(56, 189, 248, 0.35);
+    }
+    .reveal {
+      animation: reveal 280ms ease;
+    }
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .pulse {
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.55; }
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-100">
+  <header class="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-full bg-gradient-to-br from-cyan-400 to-indigo-500 p-[1px]">
+          <div class="flex h-full w-full items-center justify-center rounded-full bg-slate-950">
+            <svg viewBox="0 0 24 24" class="h-5 w-5 text-cyan-300" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M7 4v16l13-8z" />
+            </svg>
+          </div>
+        </div>
+        <div>
+          <p class="text-xl font-semibold tracking-tight">ClipForge</p>
+          <p class="text-xs text-slate-400">Precision segment extraction</p>
+        </div>
+      </div>
+      <p class="hidden text-sm text-slate-400 sm:block">Authorized media only</p>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 pb-14 sm:px-6 lg:px-8">
+    <section class="grid items-end gap-8 lg:grid-cols-[1fr_560px]">
+      <div class="space-y-4">
+        <h1 class="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">ClipForge Video Cutter</h1>
+        <p class="max-w-xl text-base text-slate-300 sm:text-lg">
+          Paste a permitted video URL, set exact start and end points on an interactive timeline, and export only that selected range in your preferred quality.
+        </p>
+        <p class="text-sm text-slate-400">
+          If a video cannot be accessed through authorized download methods, ClipForge will show the limitation instead of faking a successful export.
+        </p>
+      </div>
+
+      <div class="reveal">
+        <label for="videoUrl" class="mb-2 block text-sm font-medium text-slate-200">Video URL</label>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <input
+            id="videoUrl"
+            type="url"
+            placeholder="https://www.youtube.com/watch?v=..."
+            class="h-12 w-full rounded-xl border border-slate-700/70 bg-slate-900/70 px-4 text-sm outline-none ring-cyan-400 transition focus:ring"
+          />
+          <button
+            id="fetchBtn"
+            class="h-12 shrink-0 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 px-6 text-sm font-semibold text-slate-950 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            Fetch Video
+          </button>
+        </div>
+        <p id="fetchHint" class="mt-2 text-xs text-slate-400">Supports videos you are authorized to download.</p>
+      </div>
+    </section>
+
+    <section id="workspace" class="mt-10 hidden space-y-6 reveal">
+      <div class="grid gap-4 lg:grid-cols-[2fr_1fr]">
+        <div class="overflow-hidden rounded-2xl border border-slate-800/80 bg-black/30">
+          <div class="aspect-video bg-slate-950">
+            <iframe
+              id="videoFrame"
+              class="h-full w-full"
+              title="Video preview"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+            ></iframe>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <img id="videoThumb" alt="Video thumbnail" class="aspect-video w-full rounded-xl object-cover" />
+          <div>
+            <p id="videoTitle" class="line-clamp-2 text-base font-medium text-slate-100"></p>
+            <p id="videoDuration" class="mt-1 text-sm text-slate-400"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-lg font-medium">Interactive Timeline</h2>
+          <p id="segmentSummary" class="text-sm text-cyan-300"></p>
+        </div>
+
+        <div id="timeline" class="timeline-track">
+          <div id="timelineSelection" class="timeline-selection"></div>
+          <div id="startHandle" class="timeline-handle" role="slider" aria-label="Start handle" aria-valuemin="0"></div>
+          <div id="endHandle" class="timeline-handle" role="slider" aria-label="End handle" aria-valuemin="0"></div>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <label for="startInput" class="mb-1 block text-xs text-slate-400">Start Time</label>
+            <input id="startInput" class="h-11 w-full rounded-lg border border-slate-700/80 bg-slate-900/80 px-3 text-sm" value="00:00:00" />
+          </div>
+          <div>
+            <label for="endInput" class="mb-1 block text-xs text-slate-400">End Time</label>
+            <input id="endInput" class="h-11 w-full rounded-lg border border-slate-700/80 bg-slate-900/80 px-3 text-sm" value="00:00:00" />
+          </div>
+          <div>
+            <label for="qualitySelect" class="mb-1 block text-xs text-slate-400">Quality</label>
+            <select id="qualitySelect" class="h-11 w-full rounded-lg border border-slate-700/80 bg-slate-900/80 px-3 text-sm"></select>
+          </div>
+          <div class="flex items-end">
+            <button id="previewBtn" class="h-11 w-full rounded-lg border border-cyan-300/60 text-sm font-medium text-cyan-200 transition hover:bg-cyan-300/10">
+              Preview Selection
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <button id="downloadBtn" class="h-12 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 px-6 text-sm font-semibold text-slate-950 transition hover:brightness-110">
+            Download Selected Clip
+          </button>
+          <a id="downloadLink" class="hidden text-sm font-medium text-emerald-300 underline decoration-emerald-500/70" download>
+            Download is ready
+          </a>
+        </div>
+
+        <div id="jobState" class="hidden space-y-2">
+          <div class="flex items-center justify-between text-sm text-slate-300">
+            <p id="jobMessage"></p>
+            <p id="jobPercent"></p>
+          </div>
+          <div class="h-2 w-full overflow-hidden rounded-full bg-slate-800">
+            <div id="jobProgress" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-indigo-500 transition-all duration-300"></div>
+          </div>
+        </div>
+
+        <p id="errorText" class="hidden text-sm text-rose-300"></p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const state = {
+      url: "",
+      title: "",
+      duration: 0,
+      embedUrl: "",
+      start: 0,
+      end: 0,
+      dragging: null,
+      qualities: [],
+      pollTimer: null
+    };
+
+    const ui = {
+      workspace: document.getElementById("workspace"),
+      fetchBtn: document.getElementById("fetchBtn"),
+      fetchHint: document.getElementById("fetchHint"),
+      videoUrl: document.getElementById("videoUrl"),
+      videoFrame: document.getElementById("videoFrame"),
+      videoThumb: document.getElementById("videoThumb"),
+      videoTitle: document.getElementById("videoTitle"),
+      videoDuration: document.getElementById("videoDuration"),
+      timeline: document.getElementById("timeline"),
+      selection: document.getElementById("timelineSelection"),
+      startHandle: document.getElementById("startHandle"),
+      endHandle: document.getElementById("endHandle"),
+      startInput: document.getElementById("startInput"),
+      endInput: document.getElementById("endInput"),
+      segmentSummary: document.getElementById("segmentSummary"),
+      qualitySelect: document.getElementById("qualitySelect"),
+      previewBtn: document.getElementById("previewBtn"),
+      downloadBtn: document.getElementById("downloadBtn"),
+      downloadLink: document.getElementById("downloadLink"),
+      jobState: document.getElementById("jobState"),
+      jobMessage: document.getElementById("jobMessage"),
+      jobPercent: document.getElementById("jobPercent"),
+      jobProgress: document.getElementById("jobProgress"),
+      errorText: document.getElementById("errorText")
+    };
+
+    function formatTime(totalSeconds) {
+      const safe = Math.max(0, Math.floor(totalSeconds));
+      const h = String(Math.floor(safe / 3600)).padStart(2, "0");
+      const m = String(Math.floor((safe % 3600) / 60)).padStart(2, "0");
+      const s = String(safe % 60).padStart(2, "0");
+      return `${h}:${m}:${s}`;
+    }
+
+    function parseTimeInput(value) {
+      const clean = String(value).trim();
+      if (!clean) return NaN;
+      if (/^\d+(\.\d+)?$/.test(clean)) {
+        return Number(clean);
+      }
+      const parts = clean.split(":").map((v) => Number(v));
+      if (parts.some((n) => Number.isNaN(n) || n < 0)) return NaN;
+      if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+      if (parts.length === 2) return parts[0] * 60 + parts[1];
+      return NaN;
+    }
+
+    function showError(message) {
+      ui.errorText.textContent = message;
+      ui.errorText.classList.remove("hidden");
+    }
+
+    function clearError() {
+      ui.errorText.classList.add("hidden");
+      ui.errorText.textContent = "";
+    }
+
+    function clampSelection() {
+      state.start = Math.max(0, Math.min(state.start, state.duration));
+      state.end = Math.max(0, Math.min(state.end, state.duration));
+      const minGap = Math.min(0.5, state.duration || 0);
+      if (state.end - state.start < minGap) {
+        if (state.dragging === "start") {
+          state.start = Math.max(0, state.end - minGap);
+        } else {
+          state.end = Math.min(state.duration, state.start + minGap);
+        }
+      }
+      if (state.end <= state.start) {
+        state.end = Math.min(state.duration, state.start + 0.5);
+      }
+    }
+
+    function renderTimeline() {
+      if (!state.duration) return;
+      clampSelection();
+
+      const startPct = (state.start / state.duration) * 100;
+      const endPct = (state.end / state.duration) * 100;
+
+      ui.startHandle.style.left = `${startPct}%`;
+      ui.endHandle.style.left = `${endPct}%`;
+      ui.selection.style.left = `${startPct}%`;
+      ui.selection.style.width = `${Math.max(0, endPct - startPct)}%`;
+
+      ui.startInput.value = formatTime(state.start);
+      ui.endInput.value = formatTime(state.end);
+
+      const clipDuration = Math.max(0, state.end - state.start);
+      ui.segmentSummary.textContent = `Start ${formatTime(state.start)} - End ${formatTime(state.end)} - Clip ${formatTime(clipDuration)}`;
+    }
+
+    function updateFromPointer(clientX) {
+      const rect = ui.timeline.getBoundingClientRect();
+      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      const seconds = ratio * state.duration;
+      if (state.dragging === "start") {
+        state.start = seconds;
+      } else if (state.dragging === "end") {
+        state.end = seconds;
+      }
+      renderTimeline();
+    }
+
+    function startDrag(which, event) {
+      if (!state.duration) return;
+      event.preventDefault();
+      state.dragging = which;
+      updateFromPointer(event.clientX);
+    }
+
+    window.addEventListener("pointermove", (event) => {
+      if (!state.dragging) return;
+      updateFromPointer(event.clientX);
+    });
+
+    window.addEventListener("pointerup", () => {
+      state.dragging = null;
+    });
+
+    ui.startHandle.addEventListener("pointerdown", (event) => startDrag("start", event));
+    ui.endHandle.addEventListener("pointerdown", (event) => startDrag("end", event));
+
+    ui.timeline.addEventListener("pointerdown", (event) => {
+      if (!state.duration) return;
+      const rect = ui.timeline.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const startX = (state.start / state.duration) * rect.width;
+      const endX = (state.end / state.duration) * rect.width;
+      state.dragging = Math.abs(x - startX) < Math.abs(x - endX) ? "start" : "end";
+      updateFromPointer(event.clientX);
+    });
+
+    function updateFromTextInputs() {
+      const startValue = parseTimeInput(ui.startInput.value);
+      const endValue = parseTimeInput(ui.endInput.value);
+      if (Number.isNaN(startValue) || Number.isNaN(endValue)) {
+        showError("Use valid time values such as 00:01:24.");
+        return;
+      }
+      clearError();
+      state.start = startValue;
+      state.end = endValue;
+      renderTimeline();
+    }
+
+    ui.startInput.addEventListener("change", updateFromTextInputs);
+    ui.endInput.addEventListener("change", updateFromTextInputs);
+
+    function setJobUI(visible, message = "", percent = 0) {
+      if (!visible) {
+        ui.jobState.classList.add("hidden");
+        ui.jobProgress.style.width = "0%";
+        ui.jobPercent.textContent = "";
+        ui.jobMessage.textContent = "";
+        return;
+      }
+      ui.jobState.classList.remove("hidden");
+      ui.jobMessage.textContent = message;
+      ui.jobPercent.textContent = `${Math.floor(percent)}%`;
+      ui.jobProgress.style.width = `${Math.max(0, Math.min(100, percent))}%`;
+    }
+
+    function setFetching(loading) {
+      ui.fetchBtn.disabled = loading;
+      ui.fetchBtn.textContent = loading ? "Fetching..." : "Fetch Video";
+      ui.fetchHint.classList.toggle("pulse", loading);
+    }
+
+    function sanitizeEmbed(url) {
+      return `${url}${url.includes("?") ? "&" : "?"}rel=0&modestbranding=1`;
+    }
+
+    ui.fetchBtn.addEventListener("click", async () => {
+      const url = ui.videoUrl.value.trim();
+      if (!url) {
+        showError("Paste a valid video URL first.");
+        return;
+      }
+      clearError();
+      setFetching(true);
+      ui.downloadLink.classList.add("hidden");
+
+      try {
+        const response = await fetch("/api/fetch", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url })
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "Unable to fetch video details.");
+        }
+
+        state.url = url;
+        state.title = data.title;
+        state.duration = Number(data.duration || 0);
+        state.embedUrl = data.embedUrl;
+        state.qualities = data.qualities || [];
+        if (!state.qualities.length) {
+          throw new Error("No downloadable quality options are available for this URL.");
+        }
+        state.start = 0;
+        state.end = state.duration;
+
+        ui.videoTitle.textContent = state.title;
+        ui.videoDuration.textContent = `Duration: ${formatTime(state.duration)}`;
+        ui.videoThumb.src = data.thumbnail || "";
+        ui.videoThumb.classList.toggle("hidden", !data.thumbnail);
+
+        ui.videoFrame.src = sanitizeEmbed(state.embedUrl);
+
+        ui.qualitySelect.innerHTML = "";
+        state.qualities.forEach((q) => {
+          const option = document.createElement("option");
+          option.value = q.formatId;
+          option.textContent = `${q.label} (${q.ext.toUpperCase()})`;
+          ui.qualitySelect.appendChild(option);
+        });
+
+        renderTimeline();
+        ui.workspace.classList.remove("hidden");
+      } catch (error) {
+        showError(error.message || "Failed to fetch video metadata.");
+      } finally {
+        setFetching(false);
+      }
+    });
+
+    ui.previewBtn.addEventListener("click", () => {
+      if (!state.embedUrl) return;
+      const start = Math.floor(state.start);
+      const end = Math.floor(state.end);
+      ui.videoFrame.src = `${sanitizeEmbed(state.embedUrl)}&autoplay=1&start=${start}&end=${end}`;
+    });
+
+    function clearPolling() {
+      if (state.pollTimer) {
+        clearInterval(state.pollTimer);
+        state.pollTimer = null;
+      }
+    }
+
+    async function pollJob(jobId) {
+      clearPolling();
+      state.pollTimer = setInterval(async () => {
+        try {
+          const response = await fetch(`/api/job/${jobId}`);
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || "Job polling failed.");
+
+          setJobUI(true, data.message || data.stage || "Processing", data.progress || 0);
+
+          if (data.status === "done") {
+            clearPolling();
+            setJobUI(true, "Clip ready", 100);
+            ui.downloadLink.href = data.downloadUrl;
+            ui.downloadLink.download = data.fileName || "clip.mp4";
+            ui.downloadLink.classList.remove("hidden");
+          }
+
+          if (data.status === "failed") {
+            clearPolling();
+            showError(data.error || "Clip processing failed.");
+            setJobUI(false);
+          }
+        } catch (error) {
+          clearPolling();
+          showError(error.message || "Unable to read job status.");
+          setJobUI(false);
+        }
+      }, 1000);
+    }
+
+    ui.downloadBtn.addEventListener("click", async () => {
+      if (!state.url || !state.duration) {
+        showError("Fetch a video before starting download.");
+        return;
+      }
+      if (state.end <= state.start) {
+        showError("End time must be greater than start time.");
+        return;
+      }
+
+      clearError();
+      ui.downloadLink.classList.add("hidden");
+      setJobUI(true, "Queueing clip job", 2);
+
+      try {
+        const response = await fetch("/api/clip", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            url: state.url,
+            title: state.title,
+            start: state.start,
+            end: state.end,
+            formatId: ui.qualitySelect.value
+          })
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Unable to start clip export.");
+
+        pollJob(data.jobId);
+      } catch (error) {
+        setJobUI(false);
+        showError(error.message || "Failed to create clip.");
+      }
+    });
+  </script>
+</body>
+</html>
