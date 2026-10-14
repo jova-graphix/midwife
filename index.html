@@ -1,522 +1,1357 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClipForge - Precision Video Clip Downloader</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <style>
-    :root {
-      color-scheme: dark;
-    }
-    body {
-      background:
-        radial-gradient(1300px 600px at 90% -10%, rgba(56, 189, 248, 0.28), transparent 40%),
-        radial-gradient(1000px 500px at -10% 10%, rgba(139, 92, 246, 0.28), transparent 42%),
-        #04050c;
-    }
-    .timeline-track {
-      height: 10px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(148, 163, 184, 0.35), rgba(148, 163, 184, 0.18));
-      position: relative;
-    }
-    .timeline-selection {
-      position: absolute;
-      top: 0;
-      height: 10px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(56, 189, 248, 0.95), rgba(99, 102, 241, 0.95));
-    }
-    .timeline-handle {
-      position: absolute;
-      top: 50%;
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      transform: translate(-50%, -50%);
-      border: 2px solid rgba(255, 255, 255, 0.95);
-      background: #020617;
-      cursor: ew-resize;
-      touch-action: none;
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.26);
-      transition: box-shadow 180ms ease;
-    }
-    .timeline-handle:active {
-      box-shadow: 0 0 0 5px rgba(56, 189, 248, 0.35);
-    }
-    .reveal {
-      animation: reveal 280ms ease;
-    }
-    @keyframes reveal {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .pulse {
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.55; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time with Midwife Safia - Maternal & Reproductive Health Advocacy</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+            background: #f8f9fa;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: #1E3A5F;
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #1E3A5F;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #1E3A5F;
+        }
+
+        .nav-links a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #FFD700;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .mobile-menu {
+            display: none;
+            color: #1E3A5F;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: #1E3A5F;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                color: white;
+                display: block;
+                padding: 0.5rem 0;
+            }
+
+            .nav-links a:hover {
+                color: #FFD700;
+            }
+
+            .nav-links a:hover::after {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1E3A5F 0%, #2a5aa0 100%);
+            color: white;
+            padding: 8rem 2rem;
+            text-align: center;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            font-weight: 400;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #FFD700;
+            color: #1E3A5F;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+            background: #ffd700;
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            color: #1E3A5F;
+            text-align: center;
+            margin-bottom: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #f0f0f0;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(30, 58, 95, 0.12);
+            border-color: #FFD700;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: #1E3A5F;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: #1E3A5F;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .card-text {
+            color: #555;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: 2rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
+            gap: 2rem;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+            color: #1E3A5F;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .about-image {
+            background: #1E3A5F;
+            border-radius: 15px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .service-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .service-list li {
+            padding: 0.8rem 0;
+            color: #666;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .service-list li:before {
+            content: "✓";
+            color: #1E3A5F;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .testimonial {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-left: 4px solid #1E3A5F;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .testimonial-text {
+            color: #555;
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            color: #1E3A5F;
+            font-weight: 600;
+        }
+
+        .footer {
+            background: #1E3A5F;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+            gap: 2rem;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        .footer-section a {
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #FFD700;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: #1E3A5F;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #FFD700;
+            color: #1E3A5F;
+        }
+
+        .program-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #f0f0f0;
+        }
+
+        .program-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(30, 58, 95, 0.12);
+        }
+
+        .program-header {
+            background: linear-gradient(135deg, #1E3A5F 0%, #2a5aa0 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .icon {
+            width: 1em;
+            height: 1em;
+            display: inline-block;
+            vertical-align: -0.15em;
+            flex-shrink: 0;
+        }
+
+        .program-header .icon {
+            display: block;
+            margin: 0 auto 0.8rem;
+            font-size: 2.8rem;
+            color: #FFD700;
+        }
+
+        .program-header .header-photo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #FFD700;
+            display: block;
+            margin: 0 auto 0.8rem;
+        }
+
+        .program-body {
+            padding: 2rem;
+        }
+
+        .program-body h3 {
+            color: #1E3A5F;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .program-body p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1E3A5F;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.1rem;
+            background: linear-gradient(135deg, #1E3A5F 0%, #2a5aa0 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(30, 58, 95, 0.2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(30, 58, 95, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .stat {
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            color: #1E3A5F;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            color: #555;
+            margin-top: 0.8rem;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #1E3A5F;
+        }
+
+        .modal h2 {
+            color: #1E3A5F;
+            margin-bottom: 1.5rem;
+        }
+
+        .donate-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin: 0.8rem 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .donate-option:hover {
+            border-color: #FFD700;
+            background: #fffbf0;
+        }
+
+        .donate-option input {
+            margin-right: 1rem;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .donate-option label {
+            cursor: pointer;
+            flex: 1;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .donate-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #1E3A5F 0%, #2a5aa0 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .donate-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 58, 95, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ---- Mobile hardening ---- */
+        html, body { max-width: 100%; overflow-x: hidden; }
+        img, svg { max-width: 100%; }
+        h1, h2, h3, h4, p, a, li, label { overflow-wrap: anywhere; }
+        .grid-2 > *, .grid-3 > *, .about-content > *, .footer-content > * { min-width: 0; }
+
+        @media (max-width: 768px) {
+            .navbar-container { padding: 0.8rem 1rem; }
+            .logo { font-size: 1.1rem; }
+            .hero { padding: 4rem 1.25rem; min-height: 480px; }
+            .hero p { font-size: 1.05rem; }
+            .section { padding: 3rem 1.25rem; }
+            .section-title { margin-bottom: 2rem; }
+            .card { padding: 1.5rem; }
+            .card:hover, .program-card:hover { transform: none; }
+            .about-image { height: 260px; }
+            .about-text h2 { font-size: 1.5rem; }
+            .about-text p { font-size: 1rem; }
+            .contact-form { padding: 1.5rem; }
+            .program-header { padding: 1.5rem; }
+            .program-body { padding: 1.25rem; }
+            .footer { padding: 3rem 1.25rem; }
+            .stat-number { font-size: 2.4rem; }
+            .modal-content { margin: 12% auto; width: 92%; padding: 1.5rem; max-height: 85vh; overflow-y: auto; }
+        }
+
+        @media (max-width: 400px) {
+            .logo { font-size: 0.95rem; }
+            .hero h1 { font-size: 1.7rem; }
+            .section-title { font-size: 1.5rem; }
+            .card-icon { font-size: 2.4rem; }
+        }
+    </style>
 </head>
-<body class="min-h-screen text-slate-100">
-  <header class="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="h-10 w-10 rounded-full bg-gradient-to-br from-cyan-400 to-indigo-500 p-[1px]">
-          <div class="flex h-full w-full items-center justify-center rounded-full bg-slate-950">
-            <svg viewBox="0 0 24 24" class="h-5 w-5 text-cyan-300" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M7 4v16l13-8z" />
-            </svg>
-          </div>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <span>Time with Midwife Safia</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="navigateTo('home')">Home</a></li>
+                <li><a onclick="navigateTo('about')">About Us</a></li>
+                <li><a onclick="navigateTo('programs')">Programs</a></li>
+                <li><a onclick="navigateTo('services')">Services</a></li>
+                <li><a onclick="navigateTo('contact')">Contact</a></li>
+            </ul>
+            <div class="mobile-menu" id="mobileMenu">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+            </div>
         </div>
-        <div>
-          <p class="text-xl font-semibold tracking-tight">ClipForge</p>
-          <p class="text-xs text-slate-400">Precision segment extraction</p>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <h1><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 11.5s-3.5-2-3.5-4.6A2 2 0 0 1 12 5.6a2 2 0 0 1 3.5 1.3c0 2.6-3.5 4.6-3.5 4.6z"/><path d="M2 15h3l4 2h6a1.8 1.8 0 0 0 0-3.6h-3"/><path d="m5 15 0 5 9 1 8-4.5a1.7 1.7 0 0 0-2-2.7L15 17"/></svg> Time with Midwife Safia</h1>
+            <p>Empowering Girls, Women, and Pregnant Women Through Quality Maternal and Reproductive Health Education</p>
+            <button class="cta-button" onclick="navigateTo('about')">Learn More</button>
         </div>
-      </div>
-      <p class="hidden text-sm text-slate-400 sm:block">Authorized media only</p>
+
+        <div class="section">
+            <div class="section-title">Our Mission</div>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/></svg></div>
+                    <h3 class="card-title">Education</h3>
+                    <p class="card-text">Providing comprehensive, evidence-based education on maternal and reproductive health to empower women and girls with knowledge they need.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10v4a1 1 0 0 0 1 1h3l9 4V5L7 9H4a1 1 0 0 0-1 1z"/><path d="M19.5 9.5a4 4 0 0 1 0 5"/><path d="m7 15 1.5 5.5h2.5L9.8 16"/></svg></div>
+                    <h3 class="card-title">Advocacy</h3>
+                    <p class="card-text">Advocating for improved maternal health policies and practices to ensure every woman receives quality care and support.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M2 13c0-2.5 2-4.5 4-4.5s4 2 4 4.5M14 13c0-2.5 2-4.5 4-4.5s4 2 4 4.5"/><path d="M5 19h14M16 16l3 3-3 3M8 16l-3 3 3 3"/></svg></div>
+                    <h3 class="card-title">Community Support</h3>
+                    <p class="card-text">Building supportive communities where women feel safe, valued, and empowered in their reproductive health journey.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" style="background: #f9f9f9;">
+            <div class="section-title">Our Impact</div>
+            <div class="grid-3">
+                <div class="stat">
+                    <div class="stat-number">5,000+</div>
+                    <div class="stat-label">Women Educated</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Community Programs</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">25</div>
+                    <div class="stat-label">Districts Reached</div>
+                </div>
+            </div>
+        </div>
     </div>
-  </header>
 
-  <main class="mx-auto max-w-6xl px-4 pb-14 sm:px-6 lg:px-8">
-    <section class="grid items-end gap-8 lg:grid-cols-[1fr_560px]">
-      <div class="space-y-4">
-        <h1 class="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">ClipForge Video Cutter</h1>
-        <p class="max-w-xl text-base text-slate-300 sm:text-lg">
-          Paste a permitted video URL, set exact start and end points on an interactive timeline, and export only that selected range in your preferred quality.
-        </p>
-        <p class="text-sm text-slate-400">
-          If a video cannot be accessed through authorized download methods, ClipForge will show the limitation instead of faking a successful export.
-        </p>
-      </div>
+    <!-- About Page -->
+    <div id="about" class="page">
+        <div class="section">
+            <div class="section-title">About Time with Midwife Safia</div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Our Story</h2>
+                    <p>Time with Midwife Safia is a Ghanaian Non-Governmental Organization dedicated to improving the reproductive and maternal health of girls, women, and pregnant women across Ghana. Founded on the belief that every woman deserves access to quality health information and support, we work tirelessly to bridge gaps in maternal health education.</p>
+                    
+                    <h2 style="margin-top: 2rem;">Our Vision</h2>
+                    <p>We envision a Ghana where every girl and woman has comprehensive knowledge about her reproductive health, where pregnant women receive compassionate and evidence-based care, and where maternal mortality is eliminated through education, advocacy, and community engagement.</p>
 
-      <div class="reveal">
-        <label for="videoUrl" class="mb-2 block text-sm font-medium text-slate-200">Video URL</label>
-        <div class="flex flex-col gap-3 sm:flex-row">
-          <input
-            id="videoUrl"
-            type="url"
-            placeholder="https://www.youtube.com/watch?v=..."
-            class="h-12 w-full rounded-xl border border-slate-700/70 bg-slate-900/70 px-4 text-sm outline-none ring-cyan-400 transition focus:ring"
-          />
-          <button
-            id="fetchBtn"
-            class="h-12 shrink-0 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 px-6 text-sm font-semibold text-slate-950 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            Fetch Video
-          </button>
-        </div>
-        <p id="fetchHint" class="mt-2 text-xs text-slate-400">Supports videos you are authorized to download.</p>
-      </div>
-    </section>
-
-    <section id="workspace" class="mt-10 hidden space-y-6 reveal">
-      <div class="grid gap-4 lg:grid-cols-[2fr_1fr]">
-        <div class="overflow-hidden rounded-2xl border border-slate-800/80 bg-black/30">
-          <div class="aspect-video bg-slate-950">
-            <iframe
-              id="videoFrame"
-              class="h-full w-full"
-              title="Video preview"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-            ></iframe>
-          </div>
+                    <h2 style="margin-top: 2rem;">Why Safia?</h2>
+                    <p>Named after our founding midwife, Safia represents the compassion, expertise, and dedication we bring to every interaction. Safia's commitment to women's health inspired this organization to reach beyond individual clinics and touch entire communities.</p>
+                </div>
+                <div class="about-image" style="background-image: url('https://images.pexels.com/photos/6991899/pexels-photo-6991899.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200');">
+                </div>
+            </div>
         </div>
 
-        <div class="space-y-4">
-          <img id="videoThumb" alt="Video thumbnail" class="aspect-video w-full rounded-xl object-cover" />
-          <div>
-            <p id="videoTitle" class="line-clamp-2 text-base font-medium text-slate-100"></p>
-            <p id="videoDuration" class="mt-1 text-sm text-slate-400"></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="space-y-4">
-        <div class="flex items-center justify-between">
-          <h2 class="text-lg font-medium">Interactive Timeline</h2>
-          <p id="segmentSummary" class="text-sm text-cyan-300"></p>
-        </div>
-
-        <div id="timeline" class="timeline-track">
-          <div id="timelineSelection" class="timeline-selection"></div>
-          <div id="startHandle" class="timeline-handle" role="slider" aria-label="Start handle" aria-valuemin="0"></div>
-          <div id="endHandle" class="timeline-handle" role="slider" aria-label="End handle" aria-valuemin="0"></div>
-        </div>
-
-        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <label for="startInput" class="mb-1 block text-xs text-slate-400">Start Time</label>
-            <input id="startInput" class="h-11 w-full rounded-lg border border-slate-700/80 bg-slate-900/80 px-3 text-sm" value="00:00:00" />
-          </div>
-          <div>
-            <label for="endInput" class="mb-1 block text-xs text-slate-400">End Time</label>
-            <input id="endInput" class="h-11 w-full rounded-lg border border-slate-700/80 bg-slate-900/80 px-3 text-sm" value="00:00:00" />
-          </div>
-          <div>
-            <label for="qualitySelect" class="mb-1 block text-xs text-slate-400">Quality</label>
-            <select id="qualitySelect" class="h-11 w-full rounded-lg border border-slate-700/80 bg-slate-900/80 px-3 text-sm"></select>
-          </div>
-          <div class="flex items-end">
-            <button id="previewBtn" class="h-11 w-full rounded-lg border border-cyan-300/60 text-sm font-medium text-cyan-200 transition hover:bg-cyan-300/10">
-              Preview Selection
-            </button>
-          </div>
+        <div class="section" style="background: #f9f9f9;">
+            <div class="section-title">Core Values</div>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg></div>
+                    <h3 class="card-title">Integrity</h3>
+                    <p class="card-text">We maintain the highest standards of honesty and ethical conduct in all our work and interactions.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1.4 1.4 0 0 0 2-2"/><path d="m14 14 2.5 2.5a1.4 1.4 0 0 0 2-2l-3.9-3.9a2 2 0 0 0-2.8 0l-.7.7a1.4 1.4 0 0 1-2-2l2.6-2.6a4 4 0 0 1 4.7-.4l.3.2a2 2 0 0 0 1 .3H21"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1.4 1.4 0 1 0 2-2"/><path d="M3 4h8"/></svg></div>
+                    <h3 class="card-title">Compassion</h3>
+                    <p class="card-text">We approach every woman with empathy, understanding, and respect for her unique journey and circumstances.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></div>
+                    <h3 class="card-title">Innovation</h3>
+                    <p class="card-text">We continuously seek innovative ways to reach more women and deliver better health outcomes.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 14c3 0 5 2 5 5"/></svg></div>
+                    <h3 class="card-title">Community-Centered</h3>
+                    <p class="card-text">We believe in the power of communities and involve them in all aspects of our work.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2.2h12.4a1.5 1.5 0 0 0 1.3-2.2L14 9V3"/><path d="M7.5 15h9"/></svg></div>
+                    <h3 class="card-title">Evidence-Based</h3>
+                    <p class="card-text">All our programs are grounded in scientific evidence and best practices in maternal health.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 22V3"/><path d="M5 4h13l-2.5 4.5L18 13H5"/></svg></div>
+                    <h3 class="card-title">Equity & Justice</h3>
+                    <p class="card-text">We work to ensure equitable access to health information and services for all women, regardless of background.</p>
+                </div>
+            </div>
         </div>
 
-        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <button id="downloadBtn" class="h-12 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 px-6 text-sm font-semibold text-slate-950 transition hover:brightness-110">
-            Download Selected Clip
-          </button>
-          <a id="downloadLink" class="hidden text-sm font-medium text-emerald-300 underline decoration-emerald-500/70" download>
-            Download is ready
-          </a>
+        <div class="section">
+            <div class="section-title">Meet Our Founder</div>
+            <div class="grid-2">
+                <div class="card">
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <!-- Stock photo stand-in: replace this src with Midwife Safia's own portrait -->
+                        <img src="https://images.pexels.com/photos/19751877/pexels-photo-19751877.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=400&w=400" alt="Midwife Safia, founder" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid #FFD700; box-shadow: 0 4px 15px rgba(30,58,95,0.15);">
+                    </div>
+                    <h3 class="card-title" style="text-align: center;">Midwife Safia</h3>
+                </div>
+                <div class="card">
+                    <p class="card-text">Midwife Safia is a compassionate healthcare professional with over 15 years of experience in maternal and reproductive health. Her dedication to serving women in underserved communities inspired the creation of this organization. Safia's personal commitment to education and advocacy drives our mission every day.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Programs Page -->
+    <div id="programs" class="page">
+        <div class="section">
+            <div class="section-title">Our Programs</div>
+            <div class="grid-2">
+                <div class="program-card">
+                    <div style="background-image: url('https://images.pexels.com/photos/34162722/pexels-photo-34162722.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200'); height: 250px; background-size: cover; background-position: center; border-radius: 15px 15px 0 0;"></div>
+                    <div class="program-header">
+                        <img class="header-photo" src="https://images.pexels.com/photos/34211750/pexels-photo-34211750.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=200&w=200" alt="Students in a classroom">
+                        <h2>School-Based Education</h2>
+                    </div>
+                    <div class="program-body">
+                        <h3>Reaching Young Girls</h3>
+                        <p>We conduct comprehensive sexuality education and reproductive health awareness sessions in secondary schools across Ghana. Our curriculum is age-appropriate, culturally sensitive, and empowers girls with knowledge about their bodies and health.</p>
+                        <div class="service-list">
+                            <li>Puberty and menstruation education</li>
+                            <li>Sexual health and consent</li>
+                            <li>Contraception options</li>
+                            <li>STI prevention</li>
+                            <li>Peer support training</li>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div style="background-image: url('https://images.pexels.com/photos/6991899/pexels-photo-6991899.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200'); height: 250px; background-size: cover; background-position: center; border-radius: 15px 15px 0 0;"></div>
+                    <div class="program-header">
+                        <img class="header-photo" src="https://images.pexels.com/photos/6991886/pexels-photo-6991886.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=200&w=200" alt="Pregnant woman at home">
+                        <h2>Prenatal Care Advocacy</h2>
+                    </div>
+                    <div class="program-body">
+                        <h3>Supporting Pregnant Women</h3>
+                        <p>We provide comprehensive prenatal education and advocacy programs for pregnant women and their families. Our goal is to ensure every pregnancy is wanted, every childbirth is safe, and every mother thrives.</p>
+                        <div class="service-list">
+                            <li>Prenatal care guidelines</li>
+                            <li>Nutrition during pregnancy</li>
+                            <li>Antenatal exercise</li>
+                            <li>Birth planning</li>
+                            <li>Family involvement strategies</li>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div style="background-image: url('https://images.pexels.com/photos/12149064/pexels-photo-12149064.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200'); height: 250px; background-size: cover; background-position: center; border-radius: 15px 15px 0 0;"></div>
+                    <div class="program-header">
+                        <img class="header-photo" src="https://images.pexels.com/photos/12149103/pexels-photo-12149103.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=200&w=200" alt="Community rally for women's health">
+                        <h2>Community Awareness</h2>
+                    </div>
+                    <div class="program-body">
+                        <h3>Engaging Entire Communities</h3>
+                        <p>We organize community forums, health talks, and awareness campaigns to engage whole communities in maternal health advocacy. We work with men, elders, and community leaders to address cultural barriers.</p>
+                        <div class="service-list">
+                            <li>Community health talks</li>
+                            <li>Male engagement programs</li>
+                            <li>Elder sensitization</li>
+                            <li>Radio and media campaigns</li>
+                            <li>Health fairs and exhibitions</li>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div style="background-image: url('https://images.pexels.com/photos/27355922/pexels-photo-27355922.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200'); height: 250px; background-size: cover; background-position: center; border-radius: 15px 15px 0 0;"></div>
+                    <div class="program-header">
+                        <img class="header-photo" src="https://images.pexels.com/photos/4504005/pexels-photo-4504005.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=200&w=200" alt="Newborn resting on mother">
+                        <h2>Postpartum Support</h2>
+                    </div>
+                    <div class="program-body">
+                        <h3>Caring for New Mothers</h3>
+                        <p>Our postpartum program supports new mothers through the critical postpartum period. We provide education on breastfeeding, postpartum recovery, postnatal depression awareness, and infant care.</p>
+                        <div class="service-list">
+                            <li>Breastfeeding support</li>
+                            <li>Postpartum recovery guide</li>
+                            <li>Mental health awareness</li>
+                            <li>Infant care basics</li>
+                            <li>Mother support groups</li>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div style="background-image: url('https://images.pexels.com/photos/20873461/pexels-photo-20873461.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200'); height: 250px; background-size: cover; background-position: center; border-radius: 15px 15px 0 0;"></div>
+                    <div class="program-header">
+                        <img class="header-photo" src="https://images.pexels.com/photos/19986547/pexels-photo-19986547.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=200&w=200" alt="Schoolgirl reading a book">
+                        <h2>Adolescent Health</h2>
+                    </div>
+                    <div class="program-body">
+                        <h3>Empowering Young Women</h3>
+                        <p>Specifically designed for adolescent girls aged 10-19, this program addresses the unique health challenges faced by young women in their critical developmental years.</p>
+                        <div class="service-list">
+                            <li>Puberty education</li>
+                            <li>Menstrual health</li>
+                            <li>Self-care practices</li>
+                            <li>Relationship education</li>
+                            <li>Career and health integration</li>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div style="background-image: url('https://images.pexels.com/photos/12149073/pexels-photo-12149073.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200'); height: 250px; background-size: cover; background-position: center; border-radius: 15px 15px 0 0;"></div>
+                    <div class="program-header">
+                        <img class="header-photo" src="https://images.pexels.com/photos/12149144/pexels-photo-12149144.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=200&w=200" alt="Woman speaking at an advocacy event">
+                        <h2>Policy Advocacy</h2>
+                    </div>
+                    <div class="program-body">
+                        <h3>Systemic Change</h3>
+                        <p>We engage with government bodies, health institutions, and policymakers to advocate for improved maternal health policies, better healthcare access, and stronger support systems.</p>
+                        <div class="service-list">
+                            <li>Policy briefs development</li>
+                            <li>Government engagement</li>
+                            <li>Health system strengthening</li>
+                            <li>Research documentation</li>
+                            <li>Legislative advocacy</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Page -->
+    <div id="services" class="page">
+        <div class="section">
+            <div class="section-title">Our Services</div>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="1.5"/><path d="M8 21h8M12 17v4"/><circle cx="9" cy="8" r="1.8"/><path d="M6 14c0-2 1.5-3 3-3s3 1 3 3M15 8h4M15 11h3"/></svg></div>
+                    <h3 class="card-title">Training & Workshops</h3>
+                    <p class="card-text">We conduct training sessions and workshops for students, teachers, health workers, and community members on various aspects of maternal and reproductive health.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/><path d="M12 7v6M9 10h6"/></svg></div>
+                    <h3 class="card-title">Health Information Materials</h3>
+                    <p class="card-text">We develop and distribute evidence-based educational materials including brochures, posters, and guides on reproductive and maternal health topics.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></div>
+                    <h3 class="card-title">Counseling Services</h3>
+                    <p class="card-text">Our trained counselors provide confidential and supportive counseling on reproductive health, pregnancy concerns, and related issues.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg></div>
+                    <h3 class="card-title">Radio & Media Programs</h3>
+                    <p class="card-text">We produce and air educational programs on local radio stations to reach wider audiences with maternal and reproductive health information.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-5 3 3 5-7"/></svg></div>
+                    <h3 class="card-title">Research & Data</h3>
+                    <p class="card-text">We conduct research on maternal health challenges and solutions, contributing to evidence-based policymaking and program development.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="5" rx="1"/><rect x="2" y="17" width="6" height="5" rx="1"/><rect x="16" y="17" width="6" height="5" rx="1"/><path d="M12 7v5M5 17v-5h14v5"/></svg></div>
+                    <h3 class="card-title">Partnership Development</h3>
+                    <p class="card-text">We collaborate with health institutions, NGOs, and government bodies to strengthen maternal health systems and expand our reach.</p>
+                </div>
+            </div>
         </div>
 
-        <div id="jobState" class="hidden space-y-2">
-          <div class="flex items-center justify-between text-sm text-slate-300">
-            <p id="jobMessage"></p>
-            <p id="jobPercent"></p>
-          </div>
-          <div class="h-2 w-full overflow-hidden rounded-full bg-slate-800">
-            <div id="jobProgress" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-indigo-500 transition-all duration-300"></div>
-          </div>
+        <div class="section" style="background: #f9f9f9;">
+            <div class="section-title">How to Access Our Services</div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3 class="card-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V10l9-6 9 6v11z"/><path d="M9 21v-6h6v6"/><path d="M12 4V1.5"/><circle cx="12" cy="10" r="1.2"/></svg> For Schools</h3>
+                    <p class="card-text">Contact us to arrange comprehensive reproductive health education sessions for your students. We work with school administrators to integrate our programs into the curriculum.</p>
+                    <p style="margin-top: 1rem; color: #1E3A5F; font-weight: bold;">Call: +233 XX XXX XXXX</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 14c3 0 5 2 5 5"/></svg> For Communities</h3>
+                    <p class="card-text">We can organize community health talks, awareness campaigns, and support groups in your community. Let's work together for women's health.</p>
+                    <p style="margin-top: 1rem; color: #1E3A5F; font-weight: bold;">Email: info@timewithmidwifesafia.com</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> For Pregnant Women</h3>
+                    <p class="card-text">Access our prenatal care information, support groups, and counseling services. We're here to support you through your pregnancy journey.</p>
+                    <p style="margin-top: 1rem; color: #1E3A5F; font-weight: bold;">Confidential hotline available 24/7</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="1.5"/><path d="M9 7h.01M15 7h.01M9 11h.01M15 11h.01M9 15h.01M15 15h.01M10 22v-4h4v4"/></svg> For Organizations</h3>
+                    <p class="card-text">Partner with us on maternal health initiatives. We offer training, consultation, and program development services for health organizations.</p>
+                    <p style="margin-top: 1rem; color: #1E3A5F; font-weight: bold;">partnerships@timewithmidwifesafia.com</p>
+                </div>
+            </div>
         </div>
 
-        <p id="errorText" class="hidden text-sm text-rose-300"></p>
-      </div>
-    </section>
-  </main>
+        <div class="section">
+            <div class="section-title">What Our Beneficiaries Say</div>
+            <div class="grid-2">
+                <div class="testimonial">
+                    <p class="testimonial-text">"The education I received from Time with Midwife Safia completely changed my perspective on my own health. I now understand my body better and feel empowered to make informed decisions."</p>
+                    <p class="testimonial-author">- Ama, Secondary School Student</p>
+                </div>
 
-  <script>
-    const state = {
-      url: "",
-      title: "",
-      duration: 0,
-      embedUrl: "",
-      start: 0,
-      end: 0,
-      dragging: null,
-      qualities: [],
-      pollTimer: null
-    };
+                <div class="testimonial">
+                    <p class="testimonial-text">"As a first-time mother, I was overwhelmed. The prenatal program and support group helped me prepare for my baby's arrival and gave me confidence in my ability to care for my newborn."</p>
+                    <p class="testimonial-author">- Yaa, New Mother</p>
+                </div>
 
-    const ui = {
-      workspace: document.getElementById("workspace"),
-      fetchBtn: document.getElementById("fetchBtn"),
-      fetchHint: document.getElementById("fetchHint"),
-      videoUrl: document.getElementById("videoUrl"),
-      videoFrame: document.getElementById("videoFrame"),
-      videoThumb: document.getElementById("videoThumb"),
-      videoTitle: document.getElementById("videoTitle"),
-      videoDuration: document.getElementById("videoDuration"),
-      timeline: document.getElementById("timeline"),
-      selection: document.getElementById("timelineSelection"),
-      startHandle: document.getElementById("startHandle"),
-      endHandle: document.getElementById("endHandle"),
-      startInput: document.getElementById("startInput"),
-      endInput: document.getElementById("endInput"),
-      segmentSummary: document.getElementById("segmentSummary"),
-      qualitySelect: document.getElementById("qualitySelect"),
-      previewBtn: document.getElementById("previewBtn"),
-      downloadBtn: document.getElementById("downloadBtn"),
-      downloadLink: document.getElementById("downloadLink"),
-      jobState: document.getElementById("jobState"),
-      jobMessage: document.getElementById("jobMessage"),
-      jobPercent: document.getElementById("jobPercent"),
-      jobProgress: document.getElementById("jobProgress"),
-      errorText: document.getElementById("errorText")
-    };
+                <div class="testimonial">
+                    <p class="testimonial-text">"Time with Midwife Safia's community health talk opened the eyes of many men in our community. We now understand why supporting our wives' maternal health is crucial."</p>
+                    <p class="testimonial-author">- Kofi, Community Member</p>
+                </div>
 
-    function formatTime(totalSeconds) {
-      const safe = Math.max(0, Math.floor(totalSeconds));
-      const h = String(Math.floor(safe / 3600)).padStart(2, "0");
-      const m = String(Math.floor((safe % 3600) / 60)).padStart(2, "0");
-      const s = String(safe % 60).padStart(2, "0");
-      return `${h}:${m}:${s}`;
-    }
+                <div class="testimonial">
+                    <p class="testimonial-text">"Working with this organization on policy advocacy has been transformative. Their evidence-based approach has influenced our health sector reforms."</p>
+                    <p class="testimonial-author">- Dr. Akosua, Health Ministry Official</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    function parseTimeInput(value) {
-      const clean = String(value).trim();
-      if (!clean) return NaN;
-      if (/^\d+(\.\d+)?$/.test(clean)) {
-        return Number(clean);
-      }
-      const parts = clean.split(":").map((v) => Number(v));
-      if (parts.some((n) => Number.isNaN(n) || n < 0)) return NaN;
-      if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
-      if (parts.length === 2) return parts[0] * 60 + parts[1];
-      return NaN;
-    }
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <div class="section">
+            <div class="section-title">Get In Touch</div>
+            <div class="grid-2">
+                <div>
+                    <h3 style="font-size: 1.5rem; color: #1E3A5F; margin-bottom: 1.5rem;">Contact Information</h3>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: #333; margin-bottom: 0.5rem;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #8B4789; margin-right: 0.5rem;"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>Address</h4>
+                        <p style="color: #666;">Time with Midwife Safia<br>Accra, Ghana<br>West Africa</p>
+                    </div>
 
-    function showError(message) {
-      ui.errorText.textContent = message;
-      ui.errorText.classList.remove("hidden");
-    }
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: #333; margin-bottom: 0.5rem;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #8B4789; margin-right: 0.5rem;"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>Phone</h4>
+                        <p style="color: #666;">+233 XX XXX XXXX<br>+233 XX XXX XXXX</p>
+                    </div>
 
-    function clearError() {
-      ui.errorText.classList.add("hidden");
-      ui.errorText.textContent = "";
-    }
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: #333; margin-bottom: 0.5rem;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #8B4789; margin-right: 0.5rem;"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>Email</h4>
+                        <p style="color: #666;">info@timewithmidwifesafia.com<br>contact@timewithmidwifesafia.com</p>
+                    </div>
 
-    function clampSelection() {
-      state.start = Math.max(0, Math.min(state.start, state.duration));
-      state.end = Math.max(0, Math.min(state.end, state.duration));
-      const minGap = Math.min(0.5, state.duration || 0);
-      if (state.end - state.start < minGap) {
-        if (state.dragging === "start") {
-          state.start = Math.max(0, state.end - minGap);
-        } else {
-          state.end = Math.min(state.duration, state.start + minGap);
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: #333; margin-bottom: 1rem;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #8B4789; margin-right: 0.5rem;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Office Hours</h4>
+                        <p style="color: #666;">Monday - Friday: 8:00 AM - 5:00 PM<br>Saturday: 9:00 AM - 1:00 PM<br>Sunday: Closed</p>
+                    </div>
+
+                    <div>
+                        <h4 style="color: #333; margin-bottom: 1rem;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #8B4789; margin-right: 0.5rem;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" title="Facebook"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                            <a href="#" title="Twitter"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></a>
+                            <a href="#" title="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><path d="M17.5 6.5h.01"/></svg></a>
+                            <a href="#" title="WhatsApp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h3 style="color: #8B4789; margin-bottom: 1.5rem; font-size: 1.3rem;">Send us a Message</h3>
+                    <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Send Message</button>
+                        <p id="formMessage" style="text-align: center; margin-top: 1rem; color: green; display: none;"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donate Modal -->
+    <div id="donateModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDonateModal()">&times;</span>
+            <h2><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #FFD700; margin-right: 0.5rem;"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>Support Our Mission</h2>
+            <p style="color: #555; margin-bottom: 1.5rem; line-height: 1.6;">Your donation helps us reach more women and girls with quality maternal and reproductive health education. Every contribution makes a difference!</p>
+            
+            <form id="donateForm" onsubmit="processDonation(event)">
+                <label style="display: block; margin-bottom: 1rem; color: #1E3A5F; font-weight: 600;">Select Donation Amount:</label>
+                
+                <div class="donate-option">
+                    <input type="radio" id="amount50" name="amount" value="50" checked>
+                    <label for="amount50">GHS 50</label>
+                </div>
+                
+                <div class="donate-option">
+                    <input type="radio" id="amount100" name="amount" value="100">
+                    <label for="amount100">GHS 100</label>
+                </div>
+                
+                <div class="donate-option">
+                    <input type="radio" id="amount250" name="amount" value="250">
+                    <label for="amount250">GHS 250</label>
+                </div>
+                
+                <div class="donate-option">
+                    <input type="radio" id="amount500" name="amount" value="500">
+                    <label for="amount500">GHS 500</label>
+                </div>
+
+                <div style="margin: 1.5rem 0;">
+                    <label style="display: block; color: #1E3A5F; font-weight: 600; margin-bottom: 0.5rem;">Custom Amount (GHS):</label>
+                    <input type="number" id="customAmount" placeholder="Enter custom amount" style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.95rem;">
+                </div>
+
+                <button type="submit" class="donate-button">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right: 0.5rem;"><path d="M12 11.5s-3.5-2-3.5-4.6A2 2 0 0 1 12 5.6a2 2 0 0 1 3.5 1.3c0 2.6-3.5 4.6-3.5 4.6z"/><path d="M2 15h3l4 2h6a1.8 1.8 0 0 0 0-3.6h-3"/><path d="m5 15 0 5 9 1 8-4.5a1.7 1.7 0 0 0-2-2.7L15 17"/></svg>Proceed to Payment
+                </button>
+            </form>
+
+            <p style="text-align: center; color: #999; font-size: 0.85rem; margin-top: 1.5rem;">Your donation is secure and confidential</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Time with Midwife Safia</h3>
+                <p>Empowering women and girls through maternal and reproductive health education and advocacy across Ghana.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg> Quick Links</h3>
+                <a href="#home">Home</a><br>
+                <a href="#about">About Us</a><br>
+                <a href="#programs">Programs</a><br>
+                <a href="#services">Services</a><br>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <div class="footer-section">
+                <h3><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Resources</h3>
+                <a href="#services">Health Tips</a><br>
+                <a href="#services">Educational Materials</a><br>
+                <a href="#contact">FAQs</a><br>
+                <a href="#programs">Blog</a>
+            </div>
+
+            <div class="footer-section">
+                <h3><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1.4 1.4 0 0 0 2-2"/><path d="m14 14 2.5 2.5a1.4 1.4 0 0 0 2-2l-3.9-3.9a2 2 0 0 0-2.8 0l-.7.7a1.4 1.4 0 0 1-2-2l2.6-2.6a4 4 0 0 1 4.7-.4l.3.2a2 2 0 0 0 1 .3H21"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1.4 1.4 0 1 0 2-2"/><path d="M3 4h8"/></svg> Support Us</h3>
+                <p>Your support helps us reach more women and girls. Consider donating or volunteering with our organization.</p>
+                <button class="cta-button" style="margin-top: 1rem; width: 100%;" onclick="openDonateModal()">Donate Now</button>
+            </div>
+        </div>
+
+        <div style="border-top: 1px solid #555; padding-top: 2rem; text-align: center;">
+            <p>&copy; 2024 Time with Midwife Safia. All rights reserved. | Privacy Policy | Terms of Service</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Dedicated to the health and wellbeing of women and girls across Ghana</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        function navigateTo(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Show selected page
+            const selectedPage = document.getElementById(pageId);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+
+            // Close mobile menu
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.remove('active');
+
+            // Update URL hash
+            window.location.hash = pageId;
         }
-      }
-      if (state.end <= state.start) {
-        state.end = Math.min(state.duration, state.start + 0.5);
-      }
-    }
 
-    function renderTimeline() {
-      if (!state.duration) return;
-      clampSelection();
+        // Mobile menu toggle
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navLinks = document.getElementById('navLinks');
 
-      const startPct = (state.start / state.duration) * 100;
-      const endPct = (state.end / state.duration) * 100;
-
-      ui.startHandle.style.left = `${startPct}%`;
-      ui.endHandle.style.left = `${endPct}%`;
-      ui.selection.style.left = `${startPct}%`;
-      ui.selection.style.width = `${Math.max(0, endPct - startPct)}%`;
-
-      ui.startInput.value = formatTime(state.start);
-      ui.endInput.value = formatTime(state.end);
-
-      const clipDuration = Math.max(0, state.end - state.start);
-      ui.segmentSummary.textContent = `Start ${formatTime(state.start)} - End ${formatTime(state.end)} - Clip ${formatTime(clipDuration)}`;
-    }
-
-    function updateFromPointer(clientX) {
-      const rect = ui.timeline.getBoundingClientRect();
-      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-      const seconds = ratio * state.duration;
-      if (state.dragging === "start") {
-        state.start = seconds;
-      } else if (state.dragging === "end") {
-        state.end = seconds;
-      }
-      renderTimeline();
-    }
-
-    function startDrag(which, event) {
-      if (!state.duration) return;
-      event.preventDefault();
-      state.dragging = which;
-      updateFromPointer(event.clientX);
-    }
-
-    window.addEventListener("pointermove", (event) => {
-      if (!state.dragging) return;
-      updateFromPointer(event.clientX);
-    });
-
-    window.addEventListener("pointerup", () => {
-      state.dragging = null;
-    });
-
-    ui.startHandle.addEventListener("pointerdown", (event) => startDrag("start", event));
-    ui.endHandle.addEventListener("pointerdown", (event) => startDrag("end", event));
-
-    ui.timeline.addEventListener("pointerdown", (event) => {
-      if (!state.duration) return;
-      const rect = ui.timeline.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const startX = (state.start / state.duration) * rect.width;
-      const endX = (state.end / state.duration) * rect.width;
-      state.dragging = Math.abs(x - startX) < Math.abs(x - endX) ? "start" : "end";
-      updateFromPointer(event.clientX);
-    });
-
-    function updateFromTextInputs() {
-      const startValue = parseTimeInput(ui.startInput.value);
-      const endValue = parseTimeInput(ui.endInput.value);
-      if (Number.isNaN(startValue) || Number.isNaN(endValue)) {
-        showError("Use valid time values such as 00:01:24.");
-        return;
-      }
-      clearError();
-      state.start = startValue;
-      state.end = endValue;
-      renderTimeline();
-    }
-
-    ui.startInput.addEventListener("change", updateFromTextInputs);
-    ui.endInput.addEventListener("change", updateFromTextInputs);
-
-    function setJobUI(visible, message = "", percent = 0) {
-      if (!visible) {
-        ui.jobState.classList.add("hidden");
-        ui.jobProgress.style.width = "0%";
-        ui.jobPercent.textContent = "";
-        ui.jobMessage.textContent = "";
-        return;
-      }
-      ui.jobState.classList.remove("hidden");
-      ui.jobMessage.textContent = message;
-      ui.jobPercent.textContent = `${Math.floor(percent)}%`;
-      ui.jobProgress.style.width = `${Math.max(0, Math.min(100, percent))}%`;
-    }
-
-    function setFetching(loading) {
-      ui.fetchBtn.disabled = loading;
-      ui.fetchBtn.textContent = loading ? "Fetching..." : "Fetch Video";
-      ui.fetchHint.classList.toggle("pulse", loading);
-    }
-
-    function sanitizeEmbed(url) {
-      return `${url}${url.includes("?") ? "&" : "?"}rel=0&modestbranding=1`;
-    }
-
-    ui.fetchBtn.addEventListener("click", async () => {
-      const url = ui.videoUrl.value.trim();
-      if (!url) {
-        showError("Paste a valid video URL first.");
-        return;
-      }
-      clearError();
-      setFetching(true);
-      ui.downloadLink.classList.add("hidden");
-
-      try {
-        const response = await fetch("/api/fetch", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ url })
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
         });
 
-        const data = await response.json();
-        if (!response.ok) {
-          throw new Error(data.error || "Unable to fetch video details.");
-        }
-
-        state.url = url;
-        state.title = data.title;
-        state.duration = Number(data.duration || 0);
-        state.embedUrl = data.embedUrl;
-        state.qualities = data.qualities || [];
-        if (!state.qualities.length) {
-          throw new Error("No downloadable quality options are available for this URL.");
-        }
-        state.start = 0;
-        state.end = state.duration;
-
-        ui.videoTitle.textContent = state.title;
-        ui.videoDuration.textContent = `Duration: ${formatTime(state.duration)}`;
-        ui.videoThumb.src = data.thumbnail || "";
-        ui.videoThumb.classList.toggle("hidden", !data.thumbnail);
-
-        ui.videoFrame.src = sanitizeEmbed(state.embedUrl);
-
-        ui.qualitySelect.innerHTML = "";
-        state.qualities.forEach((q) => {
-          const option = document.createElement("option");
-          option.value = q.formatId;
-          option.textContent = `${q.label} (${q.ext.toUpperCase()})`;
-          ui.qualitySelect.appendChild(option);
+        // Handle hash-based navigation
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.slice(1) || 'home';
+            navigateTo(hash);
         });
 
-        renderTimeline();
-        ui.workspace.classList.remove("hidden");
-      } catch (error) {
-        showError(error.message || "Failed to fetch video metadata.");
-      } finally {
-        setFetching(false);
-      }
-    });
-
-    ui.previewBtn.addEventListener("click", () => {
-      if (!state.embedUrl) return;
-      const start = Math.floor(state.start);
-      const end = Math.floor(state.end);
-      ui.videoFrame.src = `${sanitizeEmbed(state.embedUrl)}&autoplay=1&start=${start}&end=${end}`;
-    });
-
-    function clearPolling() {
-      if (state.pollTimer) {
-        clearInterval(state.pollTimer);
-        state.pollTimer = null;
-      }
-    }
-
-    async function pollJob(jobId) {
-      clearPolling();
-      state.pollTimer = setInterval(async () => {
-        try {
-          const response = await fetch(`/api/job/${jobId}`);
-          const data = await response.json();
-          if (!response.ok) throw new Error(data.error || "Job polling failed.");
-
-          setJobUI(true, data.message || data.stage || "Processing", data.progress || 0);
-
-          if (data.status === "done") {
-            clearPolling();
-            setJobUI(true, "Clip ready", 100);
-            ui.downloadLink.href = data.downloadUrl;
-            ui.downloadLink.download = data.fileName || "clip.mp4";
-            ui.downloadLink.classList.remove("hidden");
-          }
-
-          if (data.status === "failed") {
-            clearPolling();
-            showError(data.error || "Clip processing failed.");
-            setJobUI(false);
-          }
-        } catch (error) {
-          clearPolling();
-          showError(error.message || "Unable to read job status.");
-          setJobUI(false);
-        }
-      }, 1000);
-    }
-
-    ui.downloadBtn.addEventListener("click", async () => {
-      if (!state.url || !state.duration) {
-        showError("Fetch a video before starting download.");
-        return;
-      }
-      if (state.end <= state.start) {
-        showError("End time must be greater than start time.");
-        return;
-      }
-
-      clearError();
-      ui.downloadLink.classList.add("hidden");
-      setJobUI(true, "Queueing clip job", 2);
-
-      try {
-        const response = await fetch("/api/clip", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            url: state.url,
-            title: state.title,
-            start: state.start,
-            end: state.end,
-            formatId: ui.qualitySelect.value
-          })
+        // On page load, check if there's a hash
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.slice(1) || 'home';
+            navigateTo(hash);
         });
 
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || "Unable to start clip export.");
+        // Contact form handling
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
 
-        pollJob(data.jobId);
-      } catch (error) {
-        setJobUI(false);
-        showError(error.message || "Failed to create clip.");
-      }
-    });
-  </script>
+            // Simulate form submission
+            console.log('Form submitted:', { name, email, subject, message });
+
+            // Show success message
+            const formMessage = document.getElementById('formMessage');
+            formMessage.textContent = 'Thank you for your message! We will get back to you soon.';
+            formMessage.style.display = 'block';
+
+            // Reset form
+            document.getElementById('contactForm').reset();
+
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                formMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href*="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const pageId = href.slice(1);
+                    if (pageId && document.getElementById(pageId)) {
+                        navigateTo(pageId);
+                    }
+                }
+            });
+        });
+
+        // Donate Modal Functions
+        function openDonateModal() {
+            document.getElementById('donateModal').style.display = 'block';
+        }
+
+        function closeDonateModal() {
+            document.getElementById('donateModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('donateModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Process donation
+        function processDonation(event) {
+            event.preventDefault();
+            
+            const selectedAmount = document.querySelector('input[name="amount"]:checked').value;
+            const customAmount = document.getElementById('customAmount').value;
+            const finalAmount = customAmount ? customAmount : selectedAmount;
+
+            // Show confirmation
+            Swal.fire({
+                title: 'Thank You for Your Generosity!',
+                html: `<p style="color: #1E3A5F; font-size: 1.1rem; font-weight: 600;">Donation Amount: GHS ${finalAmount}</p><p style="color: #555;">You will be redirected to our secure payment gateway to complete your donation.</p>`,
+                icon: 'success',
+                confirmButtonColor: '#1E3A5F',
+                confirmButtonText: 'Proceed to Payment',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Here you would integrate with payment gateway like Stripe, PayPal, or Ghana-specific payment solutions
+                    console.log('Processing donation of GHS ' + finalAmount);
+                    
+                    // Simulate successful transaction
+                    Swal.fire({
+                        title: 'Payment Successful!',
+                        text: 'Thank you for your generous donation. Your receipt has been sent to your email.',
+                        icon: 'success',
+                        confirmButtonColor: '#1E3A5F'
+                    }).then(() => {
+                        closeDonateModal();
+                        document.getElementById('donateForm').reset();
+                    });
+                }
+            });
+        }
+
+        // Include SweetAlert2 for better modals
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+        document.head.appendChild(script);
+    </script>
 </body>
 </html>
