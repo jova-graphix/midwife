@@ -1,1357 +1,640 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time with Midwife Safia - Maternal & Reproductive Health Advocacy</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            scroll-behavior: smooth;
-            background: #f8f9fa;
-        }
-
-        .navbar {
-            background: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .navbar-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            color: #1E3A5F;
-            font-size: 1.4rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: #1E3A5F;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: #1E3A5F;
-        }
-
-        .nav-links a:hover::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: #FFD700;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        .mobile-menu {
-            display: none;
-            color: #1E3A5F;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.25rem 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                flex-direction: column;
-                background: #1E3A5F;
-                padding: 1rem;
-                gap: 1rem;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .nav-links a {
-                color: white;
-                display: block;
-                padding: 0.5rem 0;
-            }
-
-            .nav-links a:hover {
-                color: #FFD700;
-            }
-
-            .nav-links a:hover::after {
-                display: none;
-            }
-
-            .mobile-menu {
-                display: block;
-            }
-        }
-
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .hero {
-            background: linear-gradient(135deg, #1E3A5F 0%, #2a5aa0 100%);
-            color: white;
-            padding: 8rem 2rem;
-            text-align: center;
-            min-height: 600px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hero h1 {
-            font-size: 3.8rem;
-            margin-bottom: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2.5rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-            font-weight: 400;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: #FFD700;
-            color: #1E3A5F;
-            padding: 1rem 2.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-            background: #ffd700;
-        }
-
-        .cta-button:active {
-            transform: translateY(-1px);
-        }
-
-        .section {
-            padding: 5rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 2.8rem;
-            color: #1E3A5F;
-            text-align: center;
-            margin-bottom: 4rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 2.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid #f0f0f0;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 35px rgba(30, 58, 95, 0.12);
-            border-color: #FFD700;
-        }
-
-        .card-icon {
-            font-size: 3rem;
-            color: #1E3A5F;
-            margin-bottom: 1rem;
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            color: #1E3A5F;
-            margin-bottom: 0.8rem;
-            font-weight: 700;
-        }
-
-        .card-text {
-            color: #555;
-            line-height: 1.7;
-            font-size: 0.95rem;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-            gap: 2rem;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
-            gap: 2rem;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-text h2 {
-            font-size: 2rem;
-            color: #1E3A5F;
-            margin-bottom: 1.5rem;
-        }
-
-        .about-text p {
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-            font-size: 1.05rem;
-        }
-
-        .about-image {
-            background: #1E3A5F;
-            border-radius: 15px;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            color: white;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .service-list {
-            list-style: none;
-            margin: 2rem 0;
-        }
-
-        .service-list li {
-            padding: 0.8rem 0;
-            color: #666;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .service-list li:before {
-            content: "✓";
-            color: #1E3A5F;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .testimonial {
-            background: #f9f9f9;
-            padding: 2rem;
-            border-left: 4px solid #1E3A5F;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        }
-
-        .testimonial-text {
-            color: #555;
-            font-style: italic;
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-
-        .testimonial-author {
-            color: #1E3A5F;
-            font-weight: 600;
-        }
-
-        .footer {
-            background: #1E3A5F;
-            color: white;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
-            gap: 2rem;
-            text-align: left;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            color: #FFD700;
-            margin-bottom: 1rem;
-        }
-
-        .footer-section p, .footer-section a {
-            color: #ccc;
-            line-height: 1.8;
-        }
-
-        .footer-section a {
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: #FFD700;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: #1E3A5F;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: white;
-            transition: background 0.3s;
-        }
-
-        .social-links a:hover {
-            background: #FFD700;
-            color: #1E3A5F;
-        }
-
-        .program-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid #f0f0f0;
-        }
-
-        .program-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 35px rgba(30, 58, 95, 0.12);
-        }
-
-        .program-header {
-            background: linear-gradient(135deg, #1E3A5F 0%, #2a5aa0 100%);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .icon {
-            width: 1em;
-            height: 1em;
-            display: inline-block;
-            vertical-align: -0.15em;
-            flex-shrink: 0;
-        }
-
-        .program-header .icon {
-            display: block;
-            margin: 0 auto 0.8rem;
-            font-size: 2.8rem;
-            color: #FFD700;
-        }
-
-        .program-header .header-photo {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #FFD700;
-            display: block;
-            margin: 0 auto 0.8rem;
-        }
-
-        .program-body {
-            padding: 2rem;
-        }
-
-        .program-body h3 {
-            color: #1E3A5F;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .program-body p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid #f0f0f0;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #1E3A5F;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1.1rem;
-            background: linear-gradient(135deg, #1E3A5F 0%, #2a5aa0 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 15px rgba(30, 58, 95, 0.2);
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(30, 58, 95, 0.3);
-        }
-
-        .submit-btn:active {
-            transform: translateY(-1px);
-        }
-
-        .stat {
-            text-align: center;
-            padding: 2rem 1.5rem;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            color: #1E3A5F;
-            font-weight: 800;
-        }
-
-        .stat-label {
-            color: #555;
-            margin-top: 0.8rem;
-            font-weight: 500;
-            font-size: 1rem;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.4s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #1E3A5F;
-        }
-
-        .modal h2 {
-            color: #1E3A5F;
-            margin-bottom: 1.5rem;
-        }
-
-        .donate-option {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            margin: 0.8rem 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .donate-option:hover {
-            border-color: #FFD700;
-            background: #fffbf0;
-        }
-
-        .donate-option input {
-            margin-right: 1rem;
-            cursor: pointer;
-            width: 18px;
-            height: 18px;
-        }
-
-        .donate-option label {
-            cursor: pointer;
-            flex: 1;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .donate-button {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #1E3A5F 0%, #2a5aa0 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .donate-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(30, 58, 95, 0.3);
-        }
-
-        @media (max-width: 768px) {
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* ---- Mobile hardening ---- */
-        html, body { max-width: 100%; overflow-x: hidden; }
-        img, svg { max-width: 100%; }
-        h1, h2, h3, h4, p, a, li, label { overflow-wrap: anywhere; }
-        .grid-2 > *, .grid-3 > *, .about-content > *, .footer-content > * { min-width: 0; }
-
-        @media (max-width: 768px) {
-            .navbar-container { padding: 0.8rem 1rem; }
-            .logo { font-size: 1.1rem; }
-            .hero { padding: 4rem 1.25rem; min-height: 480px; }
-            .hero p { font-size: 1.05rem; }
-            .section { padding: 3rem 1.25rem; }
-            .section-title { margin-bottom: 2rem; }
-            .card { padding: 1.5rem; }
-            .card:hover, .program-card:hover { transform: none; }
-            .about-image { height: 260px; }
-            .about-text h2 { font-size: 1.5rem; }
-            .about-text p { font-size: 1rem; }
-            .contact-form { padding: 1.5rem; }
-            .program-header { padding: 1.5rem; }
-            .program-body { padding: 1.25rem; }
-            .footer { padding: 3rem 1.25rem; }
-            .stat-number { font-size: 2.4rem; }
-            .modal-content { margin: 12% auto; width: 92%; padding: 1.5rem; max-height: 85vh; overflow-y: auto; }
-        }
-
-        @media (max-width: 400px) {
-            .logo { font-size: 0.95rem; }
-            .hero h1 { font-size: 1.7rem; }
-            .section-title { font-size: 1.5rem; }
-            .card-icon { font-size: 2.4rem; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Time with Midwife Safia</title>
+<meta name="description" content="Time with Midwife Safia is a Ghanaian NGO providing education and advocacy on maternal and reproductive health for girls, women and pregnant women.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --plum:#6b1f4b; --plum-d:#4a1334; --rose:#e8638c; --rose-l:#fde8ef;
+  --gold:#f0b429; --green:#1f7a5a; --ink:#2b2230; --muted:#6d6474;
+  --bg:#fffaf7; --card:#ffffff; --line:#f0e4e8;
+  --r:18px; --shadow:0 10px 30px rgba(74,19,52,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;line-height:1.2;color:var(--plum-d)}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1160px,92%);margin:0 auto}
+
+/* Header (nothing above the NGO name) */
+header{position:sticky;top:0;z-index:50;background:rgba(255,250,247,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:700;font-size:1.25rem;color:var(--plum-d)}
+.brand svg{width:34px;height:34px;flex:none}
+.links{display:flex;gap:6px;align-items:center}
+.links a{padding:9px 14px;border-radius:999px;font-weight:500;font-size:.95rem;color:var(--ink);transition:.2s}
+.links a:hover{background:var(--rose-l)}
+.links a.active{background:var(--plum);color:#fff}
+.links a.cta{background:var(--rose);color:#fff}
+.links a.cta:hover{background:var(--plum)}
+.burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer}
+.burger span{display:block;width:24px;height:2.5px;background:var(--plum-d);margin:5px auto;border-radius:2px;transition:.25s}
+
+/* Pages */
+.page{display:none;animation:fade .45s ease}
+.page.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* Buttons */
+.btn{display:inline-block;padding:14px 26px;border-radius:999px;font-weight:600;border:2px solid transparent;cursor:pointer;font-size:1rem;font-family:inherit;transition:.2s}
+.btn-p{background:var(--rose);color:#fff}.btn-p:hover{background:var(--plum);transform:translateY(-2px)}
+.btn-o{border-color:#fff;color:#fff}.btn-o:hover{background:#fff;color:var(--plum)}
+.btn-d{background:var(--plum);color:#fff}.btn-d:hover{background:var(--rose)}
+
+/* Hero */
+.hero{position:relative;min-height:84vh;display:flex;align-items:center;color:#fff;overflow:hidden;
+  background:linear-gradient(135deg,var(--plum-d),var(--plum) 55%,var(--rose))}
+.hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.38}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(74,19,52,.88),rgba(74,19,52,.35))}
+.hero .wrap{position:relative;z-index:2;padding:70px 0}
+.hero h1{color:#fff;font-size:clamp(2.1rem,5.5vw,4rem);max-width:760px}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{font-size:clamp(1.02rem,2vw,1.25rem);max-width:600px;margin:20px 0 30px;opacity:.95}
+.hero .btns{display:flex;gap:14px;flex-wrap:wrap}
+.tag{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);padding:6px 14px;border-radius:999px;font-size:.85rem;margin-bottom:18px;letter-spacing:.03em}
+
+/* Sections */
+section.s{padding:84px 0}
+section.alt{background:#fff}
+.head{text-align:center;max-width:700px;margin:0 auto 50px}
+.head .eyebrow{color:var(--rose);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem}
+.head h2{font-size:clamp(1.8rem,4vw,2.7rem);margin:8px 0 14px}
+.head p{color:var(--muted)}
+.grid{display:grid;gap:26px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--line);transition:.25s}
+.card:hover{transform:translateY(-6px)}
+.card .body{padding:24px}
+.card h3{font-size:1.25rem;margin-bottom:8px}
+.card p{color:var(--muted);font-size:.97rem}
+.ph{position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,var(--rose-l),#f7c6d6);overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover}
+.icon{width:58px;height:58px;border-radius:16px;background:var(--rose-l);display:grid;place-items:center;font-size:1.7rem;margin-bottom:14px}
+
+.ic{width:28px;height:28px;fill:none;stroke:var(--plum);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.info .ico{flex:none;width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.14);display:grid;place-items:center}
+.info .ico .ic{width:22px;height:22px;stroke:#fff}
+/* Split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.split .ph{aspect-ratio:4/3;border-radius:26px;box-shadow:var(--shadow)}
+.split h2{font-size:clamp(1.7rem,3.6vw,2.5rem);margin-bottom:16px}
+.split p{color:var(--muted);margin-bottom:14px}
+.ticks{list-style:none;margin:16px 0 24px}
+.ticks li{padding-left:34px;position:relative;margin-bottom:10px}
+.ticks li::before{content:"";position:absolute;left:0;top:2px;width:23px;height:23px;border-radius:50%;background:var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/70% no-repeat}
+
+/* Banner */
+.banner{background:linear-gradient(120deg,var(--plum),var(--rose));color:#fff;text-align:center;padding:74px 0}
+.banner h2{color:#fff;font-size:clamp(1.7rem,4vw,2.6rem);max-width:760px;margin:0 auto 14px}
+.banner p{max-width:620px;margin:0 auto 26px;opacity:.95}
+
+/* Page title */
+.ptitle{position:relative;color:#fff;text-align:center;padding:84px 0 70px;background:linear-gradient(135deg,var(--plum-d),var(--plum));overflow:hidden}
+.ptitle .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.25}
+.ptitle .wrap{position:relative}
+.ptitle h1{color:#fff;font-size:clamp(2rem,5vw,3.2rem)}
+.ptitle p{max-width:640px;margin:12px auto 0;opacity:.92}
+
+/* Values / steps */
+.pill{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px;box-shadow:var(--shadow)}
+.pill b{font-family:'Fraunces',serif;font-size:1.15rem;color:var(--plum);display:block;margin-bottom:6px}
+.pill p{color:var(--muted);font-size:.95rem}
+.num{font-family:'Fraunces',serif;font-size:2.4rem;color:var(--rose);font-weight:700}
+
+/* Topics accordion */
+.acc{max-width:850px;margin:0 auto}
+.acc details{background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:12px;box-shadow:0 4px 14px rgba(74,19,52,.05)}
+.acc summary{cursor:pointer;padding:18px 22px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center;color:var(--plum-d)}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"+";font-size:1.5rem;color:var(--rose);flex:none}
+.acc details[open] summary::after{content:"–"}
+.acc .in{padding:0 22px 20px;color:var(--muted)}
+.acc .in li{margin:6px 0 6px 18px}
+
+.note{background:var(--rose-l);border-left:5px solid var(--rose);padding:18px 22px;border-radius:12px;max-width:850px;margin:30px auto 0;font-size:.95rem}
+
+/* Form */
+.contact{display:grid;grid-template-columns:1fr 1.2fr;gap:40px}
+.info{background:linear-gradient(160deg,var(--plum),var(--plum-d));color:#fff;border-radius:24px;padding:36px}
+.info h3{color:#fff;font-size:1.5rem;margin-bottom:12px}
+.info p{opacity:.92;margin-bottom:16px}
+.info .row{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start}
+form{background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px;box-shadow:var(--shadow)}
+label{display:block;font-weight:600;font-size:.9rem;margin:0 0 6px}
+input,select,textarea{width:100%;padding:13px 15px;border:1.5px solid #e6d8de;border-radius:12px;font:inherit;margin-bottom:18px;background:#fffdfc;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 4px rgba(232,99,140,.15)}
+textarea{min-height:130px;resize:vertical}
+.ok{display:none;background:#e6f6ee;color:#14573f;padding:14px 18px;border-radius:12px;margin-top:16px;font-weight:500}
+
+
+/* Tools */
+.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;align-items:start}
+.tool{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:28px}
+.tool .th{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.tool .th .icon{margin:0;flex:none}
+.tool h3{font-size:1.35rem}
+.tool .sub{color:var(--muted);font-size:.93rem;margin-bottom:18px}
+.tool .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tool .btn{width:100%}
+.res{display:none;background:var(--rose-l);border-left:5px solid var(--rose);border-radius:12px;padding:16px 18px;margin-top:16px;font-size:.96rem}
+.res.show{display:block}
+.res b{color:var(--plum-d)}
+.res ul{list-style:none;margin:8px 0 0}
+.res li{padding:7px 0;border-bottom:1px dashed #f3bfd0}
+.res li:last-child{border-bottom:0}
+.res .big{font-family:'Fraunces',serif;font-size:1.6rem;color:var(--plum);display:block;line-height:1.25}
+.res .warn{color:#8a2d12}
+.kick{display:flex;flex-direction:column;align-items:center;gap:10px;margin:8px 0 4px}
+.kick button.tap{width:150px;height:150px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--rose),var(--plum));color:#fff;font-size:2.6rem;font-weight:700;font-family:'Fraunces',serif;cursor:pointer;box-shadow:0 12px 28px rgba(107,31,75,.35);transition:.15s}
+.kick button.tap:active{transform:scale(.94)}
+.kick small{color:var(--muted)}
+.mini{background:none;border:0;color:var(--plum);text-decoration:underline;cursor:pointer;font:inherit;margin-top:10px}
+.tnote{font-size:.85rem;color:var(--muted);margin-top:12px}
+@media(max-width:980px){.tools{grid-template-columns:1fr}}
+@media(max-width:620px){.tool{padding:22px}.tool .two{grid-template-columns:1fr}}
+
+/* Footer */
+footer{background:var(--plum-d);color:#e9d9e2;padding:60px 0 24px;margin-top:0}
+footer .fg{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px}
+footer h4{color:#fff;font-family:'Fraunces',serif;margin-bottom:14px;font-size:1.1rem}
+footer a{display:block;margin-bottom:8px;opacity:.88}footer a:hover{opacity:1;color:var(--gold)}
+footer .brand{color:#fff;margin-bottom:12px}
+.copy{border-top:1px solid rgba(255,255,255,.15);margin-top:36px;padding-top:20px;text-align:center;font-size:.88rem;opacity:.8}
+
+/* Responsive */
+@media(max-width:980px){
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(2,1fr)}
+  .split,.contact{grid-template-columns:1fr;gap:34px}
+  footer .fg{grid-template-columns:1fr 1fr}
+}
+@media(max-width:820px){
+  .burger{display:block}
+  .links{position:absolute;top:100%;left:0;right:0;background:#fffaf7;flex-direction:column;align-items:stretch;padding:12px 4%;gap:4px;border-bottom:1px solid var(--line);display:none;box-shadow:0 14px 24px rgba(0,0,0,.08)}
+  .links.open{display:flex}
+  .links a{padding:13px 16px;border-radius:12px}
+  header .nav{position:relative}
+}
+@media(max-width:620px){
+  section.s{padding:58px 0}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .hero{min-height:78vh}
+  footer .fg{grid-template-columns:1fr}
+  form,.info{padding:24px}
+  .brand{font-size:1.08rem}
+}
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <div class="logo">
-                <span>Time with Midwife Safia</span>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a onclick="navigateTo('home')">Home</a></li>
-                <li><a onclick="navigateTo('about')">About Us</a></li>
-                <li><a onclick="navigateTo('programs')">Programs</a></li>
-                <li><a onclick="navigateTo('services')">Services</a></li>
-                <li><a onclick="navigateTo('contact')">Contact</a></li>
-            </ul>
-            <div class="mobile-menu" id="mobileMenu">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-            </div>
-        </div>
+
+<header>
+  <div class="wrap nav">
+    <a href="#home" class="brand" aria-label="Time with Midwife Safia">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="24" fill="#e8638c"/><path d="M24 36s-11-6.6-11-14.2C13 17.6 16 15 19.2 15c2 0 3.8 1 4.8 2.7C25 16 26.800 15 28.800 15 32 15 35 17.600 35 21.800 35 29.400 24 36 24 36z" fill="#fff"/></svg>
+      Time with Midwife Safia
+    </a>
+    <button class="burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <nav class="links" id="links">
+      <a href="#home" data-p="home">Home</a>
+      <a href="#about" data-p="about">About Us</a>
+      <a href="#programs" data-p="programs">Programs</a>
+      <a href="#learn" data-p="learn">Health Education</a>
+      <a href="#tools" data-p="tools">Health Tools</a>
+      <a href="#contact" data-p="contact" class="cta">Contact</a>
     </nav>
+  </div>
+</header>
 
-    <!-- Home Page -->
-    <div id="home" class="page active">
-        <div class="hero">
-            <h1><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 11.5s-3.5-2-3.5-4.6A2 2 0 0 1 12 5.6a2 2 0 0 1 3.5 1.3c0 2.6-3.5 4.6-3.5 4.6z"/><path d="M2 15h3l4 2h6a1.8 1.8 0 0 0 0-3.6h-3"/><path d="m5 15 0 5 9 1 8-4.5a1.7 1.7 0 0 0-2-2.7L15 17"/></svg> Time with Midwife Safia</h1>
-            <p>Empowering Girls, Women, and Pregnant Women Through Quality Maternal and Reproductive Health Education</p>
-            <button class="cta-button" onclick="navigateTo('about')">Learn More</button>
-        </div>
+<main>
 
-        <div class="section">
-            <div class="section-title">Our Mission</div>
-            <div class="grid-3">
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/></svg></div>
-                    <h3 class="card-title">Education</h3>
-                    <p class="card-text">Providing comprehensive, evidence-based education on maternal and reproductive health to empower women and girls with knowledge they need.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10v4a1 1 0 0 0 1 1h3l9 4V5L7 9H4a1 1 0 0 0-1 1z"/><path d="M19.5 9.5a4 4 0 0 1 0 5"/><path d="m7 15 1.5 5.5h2.5L9.8 16"/></svg></div>
-                    <h3 class="card-title">Advocacy</h3>
-                    <p class="card-text">Advocating for improved maternal health policies and practices to ensure every woman receives quality care and support.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M2 13c0-2.5 2-4.5 4-4.5s4 2 4 4.5M14 13c0-2.5 2-4.5 4-4.5s4 2 4 4.5"/><path d="M5 19h14M16 16l3 3-3 3M8 16l-3 3 3 3"/></svg></div>
-                    <h3 class="card-title">Community Support</h3>
-                    <p class="card-text">Building supportive communities where women feel safe, valued, and empowered in their reproductive health journey.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section" style="background: #f9f9f9;">
-            <div class="section-title">Our Impact</div>
-            <div class="grid-3">
-                <div class="stat">
-                    <div class="stat-number">5,000+</div>
-                    <div class="stat-label">Women Educated</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">150+</div>
-                    <div class="stat-label">Community Programs</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">25</div>
-                    <div class="stat-label">Districts Reached</div>
-                </div>
-            </div>
-        </div>
+<!-- ============ HOME ============ -->
+<div class="page" id="home">
+  <div class="hero">
+    <img class="bg" alt="" src="https://images.unsplash.com/photo-1531983412531-1f49a365ffed?auto=format&fit=crop&w=1800&q=70" onerror="this.remove()">
+    <div class="wrap">
+      <span class="tag">Maternal &amp; Reproductive Health · Ghana</span>
+      <h1>Every girl and woman deserves <em>knowledge, care</em> and a safe motherhood.</h1>
+      <p>We educate and advocate for the reproductive and maternal health of girls, women and pregnant women across Ghana, one conversation, one community at a time.</p>
+      <div class="btns">
+        <a href="#programs" class="btn btn-p">Explore Our Work</a>
+        <a href="#tools" class="btn btn-o">Try Our Health Tools</a>
+      </div>
     </div>
+  </div>
 
-    <!-- About Page -->
-    <div id="about" class="page">
-        <div class="section">
-            <div class="section-title">About Time with Midwife Safia</div>
-            <div class="about-content">
-                <div class="about-text">
-                    <h2>Our Story</h2>
-                    <p>Time with Midwife Safia is a Ghanaian Non-Governmental Organization dedicated to improving the reproductive and maternal health of girls, women, and pregnant women across Ghana. Founded on the belief that every woman deserves access to quality health information and support, we work tirelessly to bridge gaps in maternal health education.</p>
-                    
-                    <h2 style="margin-top: 2rem;">Our Vision</h2>
-                    <p>We envision a Ghana where every girl and woman has comprehensive knowledge about her reproductive health, where pregnant women receive compassionate and evidence-based care, and where maternal mortality is eliminated through education, advocacy, and community engagement.</p>
-
-                    <h2 style="margin-top: 2rem;">Why Safia?</h2>
-                    <p>Named after our founding midwife, Safia represents the compassion, expertise, and dedication we bring to every interaction. Safia's commitment to women's health inspired this organization to reach beyond individual clinics and touch entire communities.</p>
-                </div>
-                <div class="about-image" style="background-image: url('https://images.pexels.com/photos/6991899/pexels-photo-6991899.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200');">
-                </div>
-            </div>
-        </div>
-
-        <div class="section" style="background: #f9f9f9;">
-            <div class="section-title">Core Values</div>
-            <div class="grid-3">
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg></div>
-                    <h3 class="card-title">Integrity</h3>
-                    <p class="card-text">We maintain the highest standards of honesty and ethical conduct in all our work and interactions.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1.4 1.4 0 0 0 2-2"/><path d="m14 14 2.5 2.5a1.4 1.4 0 0 0 2-2l-3.9-3.9a2 2 0 0 0-2.8 0l-.7.7a1.4 1.4 0 0 1-2-2l2.6-2.6a4 4 0 0 1 4.7-.4l.3.2a2 2 0 0 0 1 .3H21"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1.4 1.4 0 1 0 2-2"/><path d="M3 4h8"/></svg></div>
-                    <h3 class="card-title">Compassion</h3>
-                    <p class="card-text">We approach every woman with empathy, understanding, and respect for her unique journey and circumstances.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></div>
-                    <h3 class="card-title">Innovation</h3>
-                    <p class="card-text">We continuously seek innovative ways to reach more women and deliver better health outcomes.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 14c3 0 5 2 5 5"/></svg></div>
-                    <h3 class="card-title">Community-Centered</h3>
-                    <p class="card-text">We believe in the power of communities and involve them in all aspects of our work.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2.2h12.4a1.5 1.5 0 0 0 1.3-2.2L14 9V3"/><path d="M7.5 15h9"/></svg></div>
-                    <h3 class="card-title">Evidence-Based</h3>
-                    <p class="card-text">All our programs are grounded in scientific evidence and best practices in maternal health.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 22V3"/><path d="M5 4h13l-2.5 4.5L18 13H5"/></svg></div>
-                    <h3 class="card-title">Equity & Justice</h3>
-                    <p class="card-text">We work to ensure equitable access to health information and services for all women, regardless of background.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="section-title">Meet Our Founder</div>
-            <div class="grid-2">
-                <div class="card">
-                    <div style="text-align: center; margin-bottom: 1.5rem;">
-                        <!-- Stock photo stand-in: replace this src with Midwife Safia's own portrait -->
-                        <img src="https://images.pexels.com/photos/19751877/pexels-photo-19751877.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=400&w=400" alt="Midwife Safia, founder" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid #FFD700; box-shadow: 0 4px 15px rgba(30,58,95,0.15);">
-                    </div>
-                    <h3 class="card-title" style="text-align: center;">Midwife Safia</h3>
-                </div>
-                <div class="card">
-                    <p class="card-text">Midwife Safia is a compassionate healthcare professional with over 15 years of experience in maternal and reproductive health. Her dedication to serving women in underserved communities inspired the creation of this organization. Safia's personal commitment to education and advocacy drives our mission every day.</p>
-                </div>
-            </div>
-        </div>
+  <section class="s alt">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">What we do</span>
+        <h2>Education that empowers. Advocacy that protects.</h2>
+        <p>Led by the care and experience of a midwife, our work brings trusted health information to the people who need it most.</p>
+      </div>
+      <div class="grid g3">
+        <div class="card"><div class="ph"><img alt="Girls learning together" src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=900&q=70" onerror="this.remove()"></div>
+          <div class="body"><h3>Adolescent Girls' Education</h3><p>Puberty, menstrual health, body literacy and informed choices, taught in safe, friendly spaces in schools and communities.</p></div></div>
+        <div class="card"><div class="ph"><img alt="Pregnant woman receiving care" src="https://images.unsplash.com/photo-1493894473891-10fc1e5dbd22?auto=format&fit=crop&w=900&q=70" onerror="this.remove()"></div>
+          <div class="body"><h3>Antenatal &amp; Maternal Care</h3><p>Guidance for pregnant women on antenatal visits, nutrition, danger signs, safe delivery and postnatal recovery.</p></div></div>
+        <div class="card"><div class="ph"><img alt="Women in a community meeting" src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=900&q=70" onerror="this.remove()"></div>
+          <div class="body"><h3>Advocacy for Women's Rights</h3><p>Speaking up for access to quality, respectful and affordable reproductive and maternal health services.</p></div></div>
+      </div>
     </div>
+  </section>
 
-    <!-- Programs Page -->
-    <div id="programs" class="page">
-        <div class="section">
-            <div class="section-title">Our Programs</div>
-            <div class="grid-2">
-                <div class="program-card">
-                    <div style="background-image: url('https://images.pexels.com/photos/34162722/pexels-photo-34162722.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200'); height: 250px; background-size: cover; background-position: center; border-radius: 15px 15px 0 0;"></div>
-                    <div class="program-header">
-                        <img class="header-photo" src="https://images.pexels.com/photos/34211750/pexels-photo-34211750.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=200&w=200" alt="Students in a classroom">
-                        <h2>School-Based Education</h2>
-                    </div>
-                    <div class="program-body">
-                        <h3>Reaching Young Girls</h3>
-                        <p>We conduct comprehensive sexuality education and reproductive health awareness sessions in secondary schools across Ghana. Our curriculum is age-appropriate, culturally sensitive, and empowers girls with knowledge about their bodies and health.</p>
-                        <div class="service-list">
-                            <li>Puberty and menstruation education</li>
-                            <li>Sexual health and consent</li>
-                            <li>Contraception options</li>
-                            <li>STI prevention</li>
-                            <li>Peer support training</li>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="program-card">
-                    <div style="background-image: url('https://images.pexels.com/photos/6991899/pexels-photo-6991899.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200'); height: 250px; background-size: cover; background-position: center; border-radius: 15px 15px 0 0;"></div>
-                    <div class="program-header">
-                        <img class="header-photo" src="https://images.pexels.com/photos/6991886/pexels-photo-6991886.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=200&w=200" alt="Pregnant woman at home">
-                        <h2>Prenatal Care Advocacy</h2>
-                    </div>
-                    <div class="program-body">
-                        <h3>Supporting Pregnant Women</h3>
-                        <p>We provide comprehensive prenatal education and advocacy programs for pregnant women and their families. Our goal is to ensure every pregnancy is wanted, every childbirth is safe, and every mother thrives.</p>
-                        <div class="service-list">
-                            <li>Prenatal care guidelines</li>
-                            <li>Nutrition during pregnancy</li>
-                            <li>Antenatal exercise</li>
-                            <li>Birth planning</li>
-                            <li>Family involvement strategies</li>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="program-card">
-                    <div style="background-image: url('https://images.pexels.com/photos/12149064/pexels-photo-12149064.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200'); height: 250px; background-size: cover; background-position: center; border-radius: 15px 15px 0 0;"></div>
-                    <div class="program-header">
-                        <img class="header-photo" src="https://images.pexels.com/photos/12149103/pexels-photo-12149103.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=200&w=200" alt="Community rally for women's health">
-                        <h2>Community Awareness</h2>
-                    </div>
-                    <div class="program-body">
-                        <h3>Engaging Entire Communities</h3>
-                        <p>We organize community forums, health talks, and awareness campaigns to engage whole communities in maternal health advocacy. We work with men, elders, and community leaders to address cultural barriers.</p>
-                        <div class="service-list">
-                            <li>Community health talks</li>
-                            <li>Male engagement programs</li>
-                            <li>Elder sensitization</li>
-                            <li>Radio and media campaigns</li>
-                            <li>Health fairs and exhibitions</li>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="program-card">
-                    <div style="background-image: url('https://images.pexels.com/photos/27355922/pexels-photo-27355922.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200'); height: 250px; background-size: cover; background-position: center; border-radius: 15px 15px 0 0;"></div>
-                    <div class="program-header">
-                        <img class="header-photo" src="https://images.pexels.com/photos/4504005/pexels-photo-4504005.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=200&w=200" alt="Newborn resting on mother">
-                        <h2>Postpartum Support</h2>
-                    </div>
-                    <div class="program-body">
-                        <h3>Caring for New Mothers</h3>
-                        <p>Our postpartum program supports new mothers through the critical postpartum period. We provide education on breastfeeding, postpartum recovery, postnatal depression awareness, and infant care.</p>
-                        <div class="service-list">
-                            <li>Breastfeeding support</li>
-                            <li>Postpartum recovery guide</li>
-                            <li>Mental health awareness</li>
-                            <li>Infant care basics</li>
-                            <li>Mother support groups</li>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="program-card">
-                    <div style="background-image: url('https://images.pexels.com/photos/20873461/pexels-photo-20873461.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200'); height: 250px; background-size: cover; background-position: center; border-radius: 15px 15px 0 0;"></div>
-                    <div class="program-header">
-                        <img class="header-photo" src="https://images.pexels.com/photos/19986547/pexels-photo-19986547.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=200&w=200" alt="Schoolgirl reading a book">
-                        <h2>Adolescent Health</h2>
-                    </div>
-                    <div class="program-body">
-                        <h3>Empowering Young Women</h3>
-                        <p>Specifically designed for adolescent girls aged 10-19, this program addresses the unique health challenges faced by young women in their critical developmental years.</p>
-                        <div class="service-list">
-                            <li>Puberty education</li>
-                            <li>Menstrual health</li>
-                            <li>Self-care practices</li>
-                            <li>Relationship education</li>
-                            <li>Career and health integration</li>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="program-card">
-                    <div style="background-image: url('https://images.pexels.com/photos/12149073/pexels-photo-12149073.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200'); height: 250px; background-size: cover; background-position: center; border-radius: 15px 15px 0 0;"></div>
-                    <div class="program-header">
-                        <img class="header-photo" src="https://images.pexels.com/photos/12149144/pexels-photo-12149144.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=200&w=200" alt="Woman speaking at an advocacy event">
-                        <h2>Policy Advocacy</h2>
-                    </div>
-                    <div class="program-body">
-                        <h3>Systemic Change</h3>
-                        <p>We engage with government bodies, health institutions, and policymakers to advocate for improved maternal health policies, better healthcare access, and stronger support systems.</p>
-                        <div class="service-list">
-                            <li>Policy briefs development</li>
-                            <li>Government engagement</li>
-                            <li>Health system strengthening</li>
-                            <li>Research documentation</li>
-                            <li>Legislative advocacy</li>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <section class="s">
+    <div class="wrap split">
+      <div class="ph"><img alt="Midwife caring for a mother" src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1100&q=70" onerror="this.remove()"></div>
+      <div>
+        <span class="eyebrow" style="color:var(--rose);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem">Why it matters</span>
+        <h2>Information saves lives and builds futures.</h2>
+        <p>Too many girls and women lack accurate information about their bodies and their health. Time with Midwife Safia exists to change that by combining a midwife's practical knowledge with community-driven education and a strong advocacy voice.</p>
+        <ul class="ticks">
+          <li>Accurate, culturally sensitive health education</li>
+          <li>Judgement-free support for girls and women</li>
+          <li>Community outreach in schools, markets and clinics</li>
+          <li>Advocacy for better maternal health policies</li>
+        </ul>
+        <a href="#about" class="btn btn-d">Learn More About Us</a>
+      </div>
     </div>
+  </section>
 
-    <!-- Services Page -->
-    <div id="services" class="page">
-        <div class="section">
-            <div class="section-title">Our Services</div>
-            <div class="grid-3">
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="1.5"/><path d="M8 21h8M12 17v4"/><circle cx="9" cy="8" r="1.8"/><path d="M6 14c0-2 1.5-3 3-3s3 1 3 3M15 8h4M15 11h3"/></svg></div>
-                    <h3 class="card-title">Training & Workshops</h3>
-                    <p class="card-text">We conduct training sessions and workshops for students, teachers, health workers, and community members on various aspects of maternal and reproductive health.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/><path d="M12 7v6M9 10h6"/></svg></div>
-                    <h3 class="card-title">Health Information Materials</h3>
-                    <p class="card-text">We develop and distribute evidence-based educational materials including brochures, posters, and guides on reproductive and maternal health topics.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></div>
-                    <h3 class="card-title">Counseling Services</h3>
-                    <p class="card-text">Our trained counselors provide confidential and supportive counseling on reproductive health, pregnancy concerns, and related issues.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg></div>
-                    <h3 class="card-title">Radio & Media Programs</h3>
-                    <p class="card-text">We produce and air educational programs on local radio stations to reach wider audiences with maternal and reproductive health information.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-5 3 3 5-7"/></svg></div>
-                    <h3 class="card-title">Research & Data</h3>
-                    <p class="card-text">We conduct research on maternal health challenges and solutions, contributing to evidence-based policymaking and program development.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="5" rx="1"/><rect x="2" y="17" width="6" height="5" rx="1"/><rect x="16" y="17" width="6" height="5" rx="1"/><path d="M12 7v5M5 17v-5h14v5"/></svg></div>
-                    <h3 class="card-title">Partnership Development</h3>
-                    <p class="card-text">We collaborate with health institutions, NGOs, and government bodies to strengthen maternal health systems and expand our reach.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section" style="background: #f9f9f9;">
-            <div class="section-title">How to Access Our Services</div>
-            <div class="grid-2">
-                <div class="card">
-                    <h3 class="card-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V10l9-6 9 6v11z"/><path d="M9 21v-6h6v6"/><path d="M12 4V1.5"/><circle cx="12" cy="10" r="1.2"/></svg> For Schools</h3>
-                    <p class="card-text">Contact us to arrange comprehensive reproductive health education sessions for your students. We work with school administrators to integrate our programs into the curriculum.</p>
-                    <p style="margin-top: 1rem; color: #1E3A5F; font-weight: bold;">Call: +233 XX XXX XXXX</p>
-                </div>
-
-                <div class="card">
-                    <h3 class="card-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 14c3 0 5 2 5 5"/></svg> For Communities</h3>
-                    <p class="card-text">We can organize community health talks, awareness campaigns, and support groups in your community. Let's work together for women's health.</p>
-                    <p style="margin-top: 1rem; color: #1E3A5F; font-weight: bold;">Email: info@timewithmidwifesafia.com</p>
-                </div>
-
-                <div class="card">
-                    <h3 class="card-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> For Pregnant Women</h3>
-                    <p class="card-text">Access our prenatal care information, support groups, and counseling services. We're here to support you through your pregnancy journey.</p>
-                    <p style="margin-top: 1rem; color: #1E3A5F; font-weight: bold;">Confidential hotline available 24/7</p>
-                </div>
-
-                <div class="card">
-                    <h3 class="card-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="1.5"/><path d="M9 7h.01M15 7h.01M9 11h.01M15 11h.01M9 15h.01M15 15h.01M10 22v-4h4v4"/></svg> For Organizations</h3>
-                    <p class="card-text">Partner with us on maternal health initiatives. We offer training, consultation, and program development services for health organizations.</p>
-                    <p style="margin-top: 1rem; color: #1E3A5F; font-weight: bold;">partnerships@timewithmidwifesafia.com</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="section-title">What Our Beneficiaries Say</div>
-            <div class="grid-2">
-                <div class="testimonial">
-                    <p class="testimonial-text">"The education I received from Time with Midwife Safia completely changed my perspective on my own health. I now understand my body better and feel empowered to make informed decisions."</p>
-                    <p class="testimonial-author">- Ama, Secondary School Student</p>
-                </div>
-
-                <div class="testimonial">
-                    <p class="testimonial-text">"As a first-time mother, I was overwhelmed. The prenatal program and support group helped me prepare for my baby's arrival and gave me confidence in my ability to care for my newborn."</p>
-                    <p class="testimonial-author">- Yaa, New Mother</p>
-                </div>
-
-                <div class="testimonial">
-                    <p class="testimonial-text">"Time with Midwife Safia's community health talk opened the eyes of many men in our community. We now understand why supporting our wives' maternal health is crucial."</p>
-                    <p class="testimonial-author">- Kofi, Community Member</p>
-                </div>
-
-                <div class="testimonial">
-                    <p class="testimonial-text">"Working with this organization on policy advocacy has been transformative. Their evidence-based approach has influenced our health sector reforms."</p>
-                    <p class="testimonial-author">- Dr. Akosua, Health Ministry Official</p>
-                </div>
-            </div>
-        </div>
+  <section class="s alt">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Our focus areas</span><h2>Where we work</h2></div>
+      <div class="grid g4">
+        <div class="pill"><div class="icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.7s6 6.3 6 10.8a6 6 0 0 1-12 0C6 9 12 2.7 12 2.7z"/></svg></div><b>Menstrual Health</b><p>Breaking stigma and promoting hygiene and dignity.</p></div>
+        <div class="pill"><div class="icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg></div><b>Safe Pregnancy</b><p>Antenatal awareness and early danger-sign recognition.</p></div>
+        <div class="pill"><div class="icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div><b>Safe Delivery</b><p>Skilled birth attendance and birth preparedness.</p></div>
+        <div class="pill"><div class="icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.1A8.4 8.4 0 1 1 21 11.5z"/></svg></div><b>Reproductive Rights</b><p>Informed choices, family planning and respectful care.</p></div>
+      </div>
     </div>
+  </section>
 
-    <!-- Contact Page -->
-    <div id="contact" class="page">
-        <div class="section">
-            <div class="section-title">Get In Touch</div>
-            <div class="grid-2">
-                <div>
-                    <h3 style="font-size: 1.5rem; color: #1E3A5F; margin-bottom: 1.5rem;">Contact Information</h3>
-                    
-                    <div style="margin-bottom: 2rem;">
-                        <h4 style="color: #333; margin-bottom: 0.5rem;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #8B4789; margin-right: 0.5rem;"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>Address</h4>
-                        <p style="color: #666;">Time with Midwife Safia<br>Accra, Ghana<br>West Africa</p>
-                    </div>
-
-                    <div style="margin-bottom: 2rem;">
-                        <h4 style="color: #333; margin-bottom: 0.5rem;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #8B4789; margin-right: 0.5rem;"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>Phone</h4>
-                        <p style="color: #666;">+233 XX XXX XXXX<br>+233 XX XXX XXXX</p>
-                    </div>
-
-                    <div style="margin-bottom: 2rem;">
-                        <h4 style="color: #333; margin-bottom: 0.5rem;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #8B4789; margin-right: 0.5rem;"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>Email</h4>
-                        <p style="color: #666;">info@timewithmidwifesafia.com<br>contact@timewithmidwifesafia.com</p>
-                    </div>
-
-                    <div style="margin-bottom: 2rem;">
-                        <h4 style="color: #333; margin-bottom: 1rem;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #8B4789; margin-right: 0.5rem;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Office Hours</h4>
-                        <p style="color: #666;">Monday - Friday: 8:00 AM - 5:00 PM<br>Saturday: 9:00 AM - 1:00 PM<br>Sunday: Closed</p>
-                    </div>
-
-                    <div>
-                        <h4 style="color: #333; margin-bottom: 1rem;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #8B4789; margin-right: 0.5rem;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>Follow Us</h4>
-                        <div class="social-links">
-                            <a href="#" title="Facebook"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-                            <a href="#" title="Twitter"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></a>
-                            <a href="#" title="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><path d="M17.5 6.5h.01"/></svg></a>
-                            <a href="#" title="WhatsApp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="contact-form">
-                    <h3 style="color: #8B4789; margin-bottom: 1.5rem; font-size: 1.3rem;">Send us a Message</h3>
-                    <form id="contactForm" onsubmit="handleContactSubmit(event)">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" required></textarea>
-                        </div>
-
-                        <button type="submit" class="submit-btn">Send Message</button>
-                        <p id="formMessage" style="text-align: center; margin-top: 1rem; color: green; display: none;"></p>
-                    </form>
-                </div>
-            </div>
-        </div>
+  <div class="banner">
+    <div class="wrap">
+      <h2>Join us in making motherhood safer in Ghana.</h2>
+      <p>Volunteer, partner with us, or invite our team to educate your school, church, mosque or community group.</p>
+      <a href="#contact" class="btn btn-o">Get in Touch</a>
     </div>
+  </div>
+</div>
 
-    <!-- Donate Modal -->
-    <div id="donateModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeDonateModal()">&times;</span>
-            <h2><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #FFD700; margin-right: 0.5rem;"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>Support Our Mission</h2>
-            <p style="color: #555; margin-bottom: 1.5rem; line-height: 1.6;">Your donation helps us reach more women and girls with quality maternal and reproductive health education. Every contribution makes a difference!</p>
-            
-            <form id="donateForm" onsubmit="processDonation(event)">
-                <label style="display: block; margin-bottom: 1rem; color: #1E3A5F; font-weight: 600;">Select Donation Amount:</label>
-                
-                <div class="donate-option">
-                    <input type="radio" id="amount50" name="amount" value="50" checked>
-                    <label for="amount50">GHS 50</label>
-                </div>
-                
-                <div class="donate-option">
-                    <input type="radio" id="amount100" name="amount" value="100">
-                    <label for="amount100">GHS 100</label>
-                </div>
-                
-                <div class="donate-option">
-                    <input type="radio" id="amount250" name="amount" value="250">
-                    <label for="amount250">GHS 250</label>
-                </div>
-                
-                <div class="donate-option">
-                    <input type="radio" id="amount500" name="amount" value="500">
-                    <label for="amount500">GHS 500</label>
-                </div>
+<!-- ============ ABOUT ============ -->
+<div class="page" id="about">
+  <div class="ptitle"><img class="bg" alt="" src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1600&q=60" onerror="this.remove()">
+    <div class="wrap"><h1>About Us</h1><p>A Ghanaian non-governmental organisation devoted to the reproductive and maternal well-being of girls, women and pregnant women.</p></div></div>
 
-                <div style="margin: 1.5rem 0;">
-                    <label style="display: block; color: #1E3A5F; font-weight: 600; margin-bottom: 0.5rem;">Custom Amount (GHS):</label>
-                    <input type="number" id="customAmount" placeholder="Enter custom amount" style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.95rem;">
-                </div>
-
-                <button type="submit" class="donate-button">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right: 0.5rem;"><path d="M12 11.5s-3.5-2-3.5-4.6A2 2 0 0 1 12 5.6a2 2 0 0 1 3.5 1.3c0 2.6-3.5 4.6-3.5 4.6z"/><path d="M2 15h3l4 2h6a1.8 1.8 0 0 0 0-3.6h-3"/><path d="m5 15 0 5 9 1 8-4.5a1.7 1.7 0 0 0-2-2.7L15 17"/></svg>Proceed to Payment
-                </button>
-            </form>
-
-            <p style="text-align: center; color: #999; font-size: 0.85rem; margin-top: 1.5rem;">Your donation is secure and confidential</p>
-        </div>
+  <section class="s">
+    <div class="wrap split">
+      <div>
+        <h2>Our Story</h2>
+        <p><b>Time with Midwife Safia</b> was founded on a simple belief: when girls and women understand their bodies and their rights, families and communities thrive.</p>
+        <p>Rooted in the day-to-day experience of midwifery, we bring clear, compassionate and practical health education to places where information is hard to find, and we speak up for the policies and services women deserve.</p>
+        <p>We work through workshops, school sessions, antenatal talks, community dialogues and media campaigns, always in a warm, respectful and stigma-free way.</p>
+      </div>
+      <div class="ph"><img alt="Women smiling together" src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1100&q=70" onerror="this.remove()"></div>
     </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Time with Midwife Safia</h3>
-                <p>Empowering women and girls through maternal and reproductive health education and advocacy across Ghana.</p>
-            </div>
+  <section class="s alt">
+    <div class="wrap grid g2">
+      <div class="pill"><div class="icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div><b style="font-size:1.4rem">Our Mission</b><p>To educate and empower girls, women and pregnant women with accurate reproductive and maternal health knowledge, and to advocate for accessible, quality and respectful care across Ghana.</p></div>
+      <div class="pill"><div class="icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div><b style="font-size:1.4rem">Our Vision</b><p>A Ghana where every girl grows up informed, every woman makes confident choices about her body, and every pregnancy and birth is safe and dignified.</p></div>
+    </div>
+  </section>
 
-            <div class="footer-section">
-                <h3><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg> Quick Links</h3>
-                <a href="#home">Home</a><br>
-                <a href="#about">About Us</a><br>
-                <a href="#programs">Programs</a><br>
-                <a href="#services">Services</a><br>
-                <a href="#contact">Contact</a>
-            </div>
+  <section class="s">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">What guides us</span><h2>Our Core Values</h2></div>
+      <div class="grid g3">
+        <div class="pill"><b>Compassion</b><p>We listen first and care deeply, treating every woman with dignity.</p></div>
+        <div class="pill"><b>Evidence-Based Knowledge</b><p>Everything we teach is accurate, practical and in line with trusted health guidance.</p></div>
+        <div class="pill"><b>Inclusion</b><p>We reach girls and women in cities, towns and rural communities alike.</p></div>
+        <div class="pill"><b>Respect for Culture</b><p>We engage families, elders and faith leaders as partners in change.</p></div>
+        <div class="pill"><b>Confidentiality</b><p>Safe, private spaces where questions are welcome and never judged.</p></div>
+        <div class="pill"><b>Accountability</b><p>We are transparent and focused on real, lasting community impact.</p></div>
+      </div>
+    </div>
+  </section>
 
-            <div class="footer-section">
-                <h3><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Resources</h3>
-                <a href="#services">Health Tips</a><br>
-                <a href="#services">Educational Materials</a><br>
-                <a href="#contact">FAQs</a><br>
-                <a href="#programs">Blog</a>
-            </div>
+  <section class="s alt">
+    <div class="wrap split">
+      <div class="ph"><img alt="Midwife consultation" src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?auto=format&fit=crop&w=1100&q=70" onerror="this.remove()"></div>
+      <div>
+        <h2>Meet Midwife Safia</h2>
+        <p>Midwife Safia is a dedicated health professional whose years at the bedside shaped this organisation. Having supported women through pregnancy, childbirth and recovery, she saw first-hand how a lack of information can put mothers and babies at risk.</p>
+        <p>Today she leads a growing team of volunteers, health workers and community champions committed to making reliable knowledge available to every girl and woman.</p>
+        <a href="#contact" class="btn btn-p">Work With Us</a>
+      </div>
+    </div>
+  </section>
+</div>
 
-            <div class="footer-section">
-                <h3><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1.4 1.4 0 0 0 2-2"/><path d="m14 14 2.5 2.5a1.4 1.4 0 0 0 2-2l-3.9-3.9a2 2 0 0 0-2.8 0l-.7.7a1.4 1.4 0 0 1-2-2l2.6-2.6a4 4 0 0 1 4.7-.4l.3.2a2 2 0 0 0 1 .3H21"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1.4 1.4 0 1 0 2-2"/><path d="M3 4h8"/></svg> Support Us</h3>
-                <p>Your support helps us reach more women and girls. Consider donating or volunteering with our organization.</p>
-                <button class="cta-button" style="margin-top: 1rem; width: 100%;" onclick="openDonateModal()">Donate Now</button>
-            </div>
+<!-- ============ PROGRAMS ============ -->
+<div class="page" id="programs">
+  <div class="ptitle"><img class="bg" alt="" src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&w=1600&q=60" onerror="this.remove()">
+    <div class="wrap"><h1>Our Programs</h1><p>Practical education and advocacy initiatives for every stage of a girl's and woman's reproductive life.</p></div></div>
+
+  <section class="s">
+    <div class="wrap grid g3">
+      <div class="card"><div class="ph"><img alt="School education session" src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=900&q=70" onerror="this.remove()"></div>
+        <div class="body"><h3>Girls' Health Clubs</h3><p>Weekly safe-space sessions in schools covering puberty, menstrual hygiene, self-esteem, nutrition and preventing early pregnancy.</p></div></div>
+      <div class="card"><div class="ph"><img alt="Antenatal class" src="https://images.unsplash.com/photo-1544126592-807ade215a0b?auto=format&fit=crop&w=900&q=70" onerror="this.remove()"></div>
+        <div class="body"><h3>Mama-Care Antenatal Talks</h3><p>Community and clinic-based classes teaching expectant mothers about antenatal care, birth planning, breastfeeding and newborn care.</p></div></div>
+      <div class="card"><div class="ph"><img alt="Community outreach" src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=900&q=70" onerror="this.remove()"></div>
+        <div class="body"><h3>Community Outreach Days</h3><p>Pop-up education events in markets, churches, mosques and villages with talks, Q&amp;A and referrals to nearby health facilities.</p></div></div>
+      <div class="card"><div class="ph"><img alt="Women advocacy" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=70" onerror="this.remove()"></div>
+        <div class="body"><h3>Policy &amp; Rights Advocacy</h3><p>Engaging leaders, health authorities and the media to improve maternal health services and protect women's reproductive rights.</p></div></div>
+      <div class="card"><div class="ph"><img alt="Training session" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=900&q=70" onerror="this.remove()"></div>
+        <div class="body"><h3>Peer Educator Training</h3><p>Training young women and community volunteers to become trusted health educators and mentors in their own neighbourhoods.</p></div></div>
+      <div class="card"><div class="ph"><img alt="Mother and baby" src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=900&q=70" onerror="this.remove()"></div>
+        <div class="body"><h3>Postnatal &amp; Newborn Support</h3><p>Education on recovery after birth, mental well-being, exclusive breastfeeding, immunisation and early newborn care.</p></div></div>
+    </div>
+  </section>
+
+  <section class="s alt">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">How we work</span><h2>Our approach in four steps</h2></div>
+      <div class="grid g4">
+        <div class="pill"><div class="num">01</div><b>Listen</b><p>We learn the needs and concerns of each community.</p></div>
+        <div class="pill"><div class="num">02</div><b>Educate</b><p>Clear, friendly sessions led by trained midwives and educators.</p></div>
+        <div class="pill"><div class="num">03</div><b>Connect</b><p>We link women to trusted health facilities and services.</p></div>
+        <div class="pill"><div class="num">04</div><b>Advocate</b><p>We raise community voices with decision-makers.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ LEARN ============ -->
+<div class="page" id="learn">
+  <div class="ptitle"><img class="bg" alt="" src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?auto=format&fit=crop&w=1600&q=60" onerror="this.remove()">
+    <div class="wrap"><h1>Health Education</h1><p>Simple, trustworthy guidance on reproductive and maternal health. Tap a topic to learn more.</p></div></div>
+
+  <section class="s">
+    <div class="wrap">
+      <div class="acc">
+        <details open><summary>Menstrual health &amp; puberty</summary><div class="in">
+          <ul><li>Menstruation is a normal, healthy part of growing up, with no shame attached.</li><li>Change pads regularly and wash hands and the body with clean water.</li><li>Cycles can be irregular in the first years. See a health worker if periods are extremely painful, very heavy or suddenly stop.</li></ul></div></details>
+        <details><summary>Healthy pregnancy &amp; antenatal care</summary><div class="in">
+          <ul><li>Start antenatal visits as early as possible and attend all scheduled appointments.</li><li>Eat a balanced diet with iron-rich foods, and take supplements prescribed by your health worker.</li><li>Sleep under an insecticide-treated net and avoid herbal or other medicines unless advised by a professional.</li></ul></div></details>
+        <details><summary>Pregnancy danger signs: go to a facility immediately</summary><div class="in">
+          <ul><li>Vaginal bleeding or fluid leaking from the vagina</li><li>Severe headache, blurred vision or swelling of face and hands</li><li>Fever, severe abdominal pain or convulsions</li><li>Baby moving much less than usual</li></ul>
+          <p style="margin-top:8px">These can be life-threatening. Do not wait. Seek skilled care straight away.</p></div></details>
+        <details><summary>Preparing for a safe delivery</summary><div class="in">
+          <ul><li>Plan where you will deliver and how you will get there, including transport and funds.</li><li>Choose a skilled birth attendant at a health facility.</li><li>Pack essentials early and agree on a support person.</li></ul></div></details>
+        <details><summary>After birth: mother &amp; baby</summary><div class="in">
+          <ul><li>Attend postnatal checks for both mother and baby.</li><li>Breastfeed exclusively for the first six months where possible.</li><li>Keep the baby's immunisation schedule and seek help for low mood, which is common and treatable.</li></ul></div></details>
+        <details><summary>Family planning &amp; reproductive choices</summary><div class="in">
+          <ul><li>Every woman has the right to information about safe, effective methods.</li><li>Spacing pregnancies gives the body time to recover and improves outcomes for mother and baby.</li><li>A health worker can help you choose a method that fits your health and life.</li></ul></div></details>
+      </div>
+      <div class="note"><b>Important:</b> This page offers general education and is not a substitute for personal medical advice. If you are pregnant or unwell, please visit a qualified health professional or your nearest health facility.</div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ TOOLS ============ -->
+<div class="page" id="tools">
+  <div class="ptitle"><img class="bg" alt="" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1600&q=60" onerror="this.remove()">
+    <div class="wrap"><h1>Health Tools</h1><p>Free, private calculators and trackers to help girls and women understand their bodies and plan healthier pregnancies. Nothing you enter is saved or sent anywhere.</p></div></div>
+
+  <section class="s">
+    <div class="wrap">
+      <div class="tools">
+
+        <div class="tool" id="t-period">
+          <div class="th"><div class="icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.5"/></svg></div><h3>Period &amp; Ovulation Calculator</h3></div>
+          <p class="sub">Predict your next periods, ovulation day and fertile window.</p>
+          <label for="p-lmp">First day of your last period</label><input type="date" id="p-lmp">
+          <div class="two">
+            <div><label for="p-cyc">Cycle length (days)</label><select id="p-cyc"><option value="21">21 days</option><option value="22">22 days</option><option value="23">23 days</option><option value="24">24 days</option><option value="25">25 days</option><option value="26">26 days</option><option value="27">27 days</option><option value="28" selected>28 days (average)</option><option value="29">29 days</option><option value="30">30 days</option><option value="31">31 days</option><option value="32">32 days</option><option value="33">33 days</option><option value="34">34 days</option><option value="35">35 days</option><option value="36">36 days</option><option value="37">37 days</option><option value="38">38 days</option><option value="39">39 days</option><option value="40">40 days</option><option value="41">41 days</option><option value="42">42 days</option><option value="43">43 days</option><option value="44">44 days</option><option value="45">45 days</option></select></div>
+            <div><label for="p-len">Period length (days)</label><select id="p-len"><option value="2">2 days</option><option value="3">3 days</option><option value="4">4 days</option><option value="5" selected>5 days</option><option value="6">6 days</option><option value="7">7 days</option><option value="8">8 days</option><option value="9">9 days</option><option value="10">10 days</option></select></div>
+          </div>
+          <button type="button" class="btn btn-p" id="p-go">Calculate</button>
+          <div class="res" id="p-res"></div>
+          <p class="tnote">Estimates only, and cycles can vary. This is not a method of birth control.</p>
         </div>
 
-        <div style="border-top: 1px solid #555; padding-top: 2rem; text-align: center;">
-            <p>&copy; 2024 Time with Midwife Safia. All rights reserved. | Privacy Policy | Terms of Service</p>
-            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Dedicated to the health and wellbeing of women and girls across Ghana</p>
+        <div class="tool" id="t-due">
+          <div class="th"><div class="icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg></div><h3>Due Date &amp; Pregnancy Week</h3></div>
+          <p class="sub">Find your estimated due date, current week and suggested antenatal visit dates.</p>
+          <label for="d-lmp">First day of your last period</label><input type="date" id="d-lmp">
+          <label for="d-cyc">Usual cycle length (days)</label><select id="d-cyc"><option value="21">21 days</option><option value="22">22 days</option><option value="23">23 days</option><option value="24">24 days</option><option value="25">25 days</option><option value="26">26 days</option><option value="27">27 days</option><option value="28" selected>28 days (average)</option><option value="29">29 days</option><option value="30">30 days</option><option value="31">31 days</option><option value="32">32 days</option><option value="33">33 days</option><option value="34">34 days</option><option value="35">35 days</option><option value="36">36 days</option><option value="37">37 days</option><option value="38">38 days</option><option value="39">39 days</option><option value="40">40 days</option><option value="41">41 days</option><option value="42">42 days</option><option value="43">43 days</option><option value="44">44 days</option><option value="45">45 days</option></select>
+          <button type="button" class="btn btn-p" id="d-go">Calculate</button>
+          <div class="res" id="d-res"></div>
+          <p class="tnote">An ultrasound scan or your midwife can confirm your exact due date.</p>
         </div>
-    </footer>
 
-    <script>
-        // Navigation functionality
-        function navigateTo(pageId) {
-            // Hide all pages
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
+        <div class="tool" id="t-kick">
+          <div class="th"><div class="icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Baby Kick Counter</h3></div>
+          <p class="sub">From about 28 weeks, tap each time you feel your baby move and see how long it takes to reach 10.</p>
+          <div class="kick">
+            <button type="button" class="tap" id="k-tap" aria-label="Count a movement">0</button>
+            <small id="k-time">Tap to start the timer</small>
+          </div>
+          <div class="res" id="k-res"></div>
+          <button type="button" class="mini" id="k-reset">Reset</button>
+          <p class="tnote"><b>Important:</b> if your baby moves less than usual, or you are worried, contact your midwife or go to a health facility right away.</p>
+        </div>
 
-            // Show selected page
-            const selectedPage = document.getElementById(pageId);
-            if (selectedPage) {
-                selectedPage.classList.add('active');
-                window.scrollTo(0, 0);
-            }
+        <div class="tool" id="t-bmi">
+          <div class="th"><div class="icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 9a4 4 0 0 1 8 0"/><path d="M12 9l2-2"/></svg></div><h3>BMI Calculator</h3></div>
+          <p class="sub">Check your body mass index (for adults aged 18 and above).</p>
+          <div class="two">
+            <div><label for="b-w">Weight (kg)</label><input type="number" id="b-w" min="20" max="300" step="0.1" placeholder="e.g. 65"></div>
+            <div><label for="b-h">Height (cm)</label><input type="number" id="b-h" min="100" max="230" step="0.1" placeholder="e.g. 165"></div>
+          </div>
+          <button type="button" class="btn btn-p" id="b-go">Calculate BMI</button>
+          <div class="res" id="b-res"></div>
+          <p class="tnote">BMI is a general guide only. During pregnancy, healthy weight gain is assessed by your midwife.</p>
+        </div>
 
-            // Close mobile menu
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.remove('active');
+        <div class="tool" id="t-water">
+          <div class="th"><div class="icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.7s6 6.3 6 10.8a6 6 0 0 1-12 0C6 9 12 2.7 12 2.7z"/></svg></div><h3>Daily Water Intake</h3></div>
+          <p class="sub">A simple estimate of how much water you should drink each day.</p>
+          <label for="w-w">Weight (kg)</label><select id="w-w"><option value="">Select your weight</option><option value="30">30 kg</option><option value="31">31 kg</option><option value="32">32 kg</option><option value="33">33 kg</option><option value="34">34 kg</option><option value="35">35 kg</option><option value="36">36 kg</option><option value="37">37 kg</option><option value="38">38 kg</option><option value="39">39 kg</option><option value="40">40 kg</option><option value="41">41 kg</option><option value="42">42 kg</option><option value="43">43 kg</option><option value="44">44 kg</option><option value="45">45 kg</option><option value="46">46 kg</option><option value="47">47 kg</option><option value="48">48 kg</option><option value="49">49 kg</option><option value="50">50 kg</option><option value="51">51 kg</option><option value="52">52 kg</option><option value="53">53 kg</option><option value="54">54 kg</option><option value="55">55 kg</option><option value="56">56 kg</option><option value="57">57 kg</option><option value="58">58 kg</option><option value="59">59 kg</option><option value="60">60 kg</option><option value="61">61 kg</option><option value="62">62 kg</option><option value="63">63 kg</option><option value="64">64 kg</option><option value="65">65 kg</option><option value="66">66 kg</option><option value="67">67 kg</option><option value="68">68 kg</option><option value="69">69 kg</option><option value="70">70 kg</option><option value="71">71 kg</option><option value="72">72 kg</option><option value="73">73 kg</option><option value="74">74 kg</option><option value="75">75 kg</option><option value="76">76 kg</option><option value="77">77 kg</option><option value="78">78 kg</option><option value="79">79 kg</option><option value="80">80 kg</option><option value="81">81 kg</option><option value="82">82 kg</option><option value="83">83 kg</option><option value="84">84 kg</option><option value="85">85 kg</option><option value="86">86 kg</option><option value="87">87 kg</option><option value="88">88 kg</option><option value="89">89 kg</option><option value="90">90 kg</option><option value="91">91 kg</option><option value="92">92 kg</option><option value="93">93 kg</option><option value="94">94 kg</option><option value="95">95 kg</option><option value="96">96 kg</option><option value="97">97 kg</option><option value="98">98 kg</option><option value="99">99 kg</option><option value="100">100 kg</option><option value="101">101 kg</option><option value="102">102 kg</option><option value="103">103 kg</option><option value="104">104 kg</option><option value="105">105 kg</option><option value="106">106 kg</option><option value="107">107 kg</option><option value="108">108 kg</option><option value="109">109 kg</option><option value="110">110 kg</option><option value="111">111 kg</option><option value="112">112 kg</option><option value="113">113 kg</option><option value="114">114 kg</option><option value="115">115 kg</option><option value="116">116 kg</option><option value="117">117 kg</option><option value="118">118 kg</option><option value="119">119 kg</option><option value="120">120 kg</option><option value="121">121 kg</option><option value="122">122 kg</option><option value="123">123 kg</option><option value="124">124 kg</option><option value="125">125 kg</option><option value="126">126 kg</option><option value="127">127 kg</option><option value="128">128 kg</option><option value="129">129 kg</option><option value="130">130 kg</option><option value="131">131 kg</option><option value="132">132 kg</option><option value="133">133 kg</option><option value="134">134 kg</option><option value="135">135 kg</option><option value="136">136 kg</option><option value="137">137 kg</option><option value="138">138 kg</option><option value="139">139 kg</option><option value="140">140 kg</option><option value="141">141 kg</option><option value="142">142 kg</option><option value="143">143 kg</option><option value="144">144 kg</option><option value="145">145 kg</option><option value="146">146 kg</option><option value="147">147 kg</option><option value="148">148 kg</option><option value="149">149 kg</option><option value="150">150 kg</option></select>
+          <label for="w-s">Your situation</label>
+          <select id="w-s"><option value="0">Not pregnant</option><option value="0.3">Pregnant</option><option value="0.7">Breastfeeding</option></select>
+          <button type="button" class="btn btn-p" id="w-go">Calculate</button>
+          <div class="res" id="w-res"></div>
+          <p class="tnote">Needs rise with hot weather and exercise. Ask a health worker if you have a medical condition.</p>
+        </div>
 
-            // Update URL hash
-            window.location.hash = pageId;
-        }
+        <div class="tool" id="t-bag">
+          <div class="th"><div class="icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1M9 11h6M9 15h4"/></svg></div><h3>Hospital Bag Checklist</h3></div>
+          <p class="sub">Tick items as you pack them. Start from about 34 weeks.</p>
+          <div id="bag"></div>
+          <div class="res show" id="bag-res" style="margin-top:14px"></div>
+        </div>
 
-        // Mobile menu toggle
-        const mobileMenu = document.getElementById('mobileMenu');
-        const navLinks = document.getElementById('navLinks');
+      </div>
+      <div class="note" style="margin-top:34px"><b>Please note:</b> These tools give general estimates and education only. They do not replace advice from a qualified midwife, doctor or health facility. If you feel unwell or have any pregnancy danger signs, seek care immediately.</div>
+    </div>
+  </section>
+</div>
 
-        mobileMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+<!-- ============ CONTACT ============ -->
+<div class="page" id="contact">
+  <div class="ptitle"><img class="bg" alt="" src="https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=1600&q=60" onerror="this.remove()">
+    <div class="wrap"><h1>Contact Us</h1><p>We would love to hear from you. Ask a question, offer support or request a session.</p></div></div>
 
-        // Handle hash-based navigation
-        window.addEventListener('hashchange', () => {
-            const hash = window.location.hash.slice(1) || 'home';
-            navigateTo(hash);
-        });
+  <section class="s">
+    <div class="wrap contact">
+      <div class="info">
+        <h3>Let's talk</h3>
+        <p>Reach out for partnerships, volunteering, media enquiries or to invite our team to your community.</p>
+        <div class="row"><span class="ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5a7 7 0 0 0-14 0C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><div><b>Location</b><br>Ghana</div></div>
+        <div class="row"><span class="ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><div><b>Email</b><br>Add your NGO email here</div></div>
+        <div class="row"><span class="ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg></span><div><b>Phone / WhatsApp</b><br>Add your NGO phone number here</div></div>
+        <div class="row"><span class="ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><b>Working hours</b><br>Monday to Friday</div></div>
+      </div>
+      <form id="cform" novalidate>
+        <label for="n">Full name</label><input id="n" required placeholder="Your name">
+        <label for="e">Email address</label><input id="e" type="email" required placeholder="you@example.com">
+        <label for="t">I would like to…</label>
+        <select id="t"><option>Ask a question</option><option>Volunteer</option><option>Partner with you</option><option>Request an education session</option><option>Support your work</option></select>
+        <label for="m">Message</label><textarea id="m" required placeholder="How can we help?"></textarea>
+        <button class="btn btn-p" type="submit" style="width:100%">Send Message</button>
+        <div class="ok" id="ok">Thank you. Your message has been received and we will get back to you soon.</div>
+      </form>
+    </div>
+  </section>
+</div>
 
-        // On page load, check if there's a hash
-        window.addEventListener('load', () => {
-            const hash = window.location.hash.slice(1) || 'home';
-            navigateTo(hash);
-        });
+</main>
 
-        // Contact form handling
-        function handleContactSubmit(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
+<footer>
+  <div class="wrap fg">
+    <div>
+      <div class="brand"><svg viewBox="0 0 48 48" style="width:34px;height:34px"><circle cx="24" cy="24" r="24" fill="#e8638c"/><path d="M24 36s-11-6.6-11-14.2C13 17.6 16 15 19.2 15c2 0 3.8 1 4.8 2.7C25 16 26.800 15 28.800 15 32 15 35 17.600 35 21.800 35 29.400 24 36 24 36z" fill="#fff"/></svg>Time with Midwife Safia</div>
+      <p style="max-width:340px;opacity:.88">Education and advocacy for the maternal and reproductive health of girls, women and pregnant women in Ghana.</p>
+    </div>
+    <div><h4>Explore</h4><a href="#home">Home</a><a href="#about">About Us</a><a href="#programs">Programs</a><a href="#learn">Health Education</a><a href="#tools">Health Tools</a></div>
+    <div><h4>Join Us</h4><a href="#contact">Contact</a></div>
+  </div>
+  <div class="wrap copy">© <span id="yr"></span> Time with Midwife Safia. All rights reserved.</div>
+</footer>
 
-            // Simulate form submission
-            console.log('Form submitted:', { name, email, subject, message });
+<script>
+(function(){
+  var pages=['home','about','programs','learn','tools','contact'];
+  var links=document.getElementById('links'), burger=document.getElementById('burger');
+  function route(){
+    var h=(location.hash||'#home').slice(1); if(pages.indexOf(h)<0) h='home';
+    pages.forEach(function(p){document.getElementById(p).classList.toggle('show',p===h)});
+    document.querySelectorAll('.links a').forEach(function(a){a.classList.toggle('active',a.dataset.p===h && !a.classList.contains('cta'))});
+    links.classList.remove('open');
+    window.scrollTo({top:0,behavior:'instant' in window?'instant':'auto'});
+    document.title=(h==='home'?'':h.charAt(0).toUpperCase()+h.slice(1)+' | ')+'Time with Midwife Safia';
+  }
+  window.addEventListener('hashchange',route); route();
+  burger.addEventListener('click',function(){links.classList.toggle('open')});
+  document.getElementById('yr').textContent=new Date().getFullYear();
+  document.getElementById('cform').addEventListener('submit',function(e){
+    e.preventDefault();
+    var f=this; if(!f.n.value.trim()||!f.e.value.trim()||!f.m.value.trim()){alert('Please fill in your name, email and message.');return}
+    document.getElementById('ok').style.display='block'; f.reset();
+  });
+})();
+</script>
 
-            // Show success message
-            const formMessage = document.getElementById('formMessage');
-            formMessage.textContent = 'Thank you for your message! We will get back to you soon.';
-            formMessage.style.display = 'block';
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  function pd(v){if(!v)return null;var a=v.split('-');return new Date(+a[0],+a[1]-1,+a[2],12)}
+  function add(d,n){var x=new Date(d.getTime());x.setDate(x.getDate()+n);return x}
+  function fmt(d){return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'})}
+  function show(id,html){var e=$(id);e.innerHTML=html;e.className='res show'}
+  function num(id){return parseFloat($(id).value)}
+  var today=new Date();today.setHours(12,0,0,0);
+  var iso=function(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+  ['p-lmp','d-lmp'].forEach(function(i){$(i).max=iso(today)});
 
-            // Reset form
-            document.getElementById('contactForm').reset();
+  /* Period & ovulation */
+  $('p-go').onclick=function(){
+    var l=pd($('p-lmp').value),c=num('p-cyc'),p=num('p-len');
+    if(!l)return show('p-res','<span class="warn">Please choose the first day of your last period.</span>');
+    if(!(c>=21&&c<=45))return show('p-res','<span class="warn">Cycle length should be between 21 and 45 days.</span>');
+    if(!(p>=2&&p<=10))return show('p-res','<span class="warn">Period length should be between 2 and 10 days.</span>');
+    var next=add(l,c);while(next<today)next=add(next,c);
+    var ov=add(next,-14),fs=add(ov,-5),fe=add(ov,1),h='';
+    h+='<span class="big">'+fmt(next)+'</span>Your next period is expected to start.<ul>';
+    h+='<li><b>Ovulation (likely):</b> '+fmt(ov)+'</li>';
+    h+='<li><b>Fertile window:</b> '+fmt(fs)+' to '+fmt(fe)+'</li>';
+    h+='<li><b>Next period ends around:</b> '+fmt(add(next,p-1))+'</li>';
+    h+='<li><b>Following periods:</b> '+fmt(add(next,c))+' and '+fmt(add(next,2*c))+'</li></ul>';
+    show('p-res',h);
+  };
 
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                formMessage.style.display = 'none';
-            }, 5000);
-        }
+  /* Due date */
+  $('d-go').onclick=function(){
+    var l=pd($('d-lmp').value),c=num('d-cyc');
+    if(!l)return show('d-res','<span class="warn">Please choose the first day of your last period.</span>');
+    if(!(c>=21&&c<=45))return show('d-res','<span class="warn">Cycle length should be between 21 and 45 days.</span>');
+    var adj=c-28,edd=add(l,280+adj),start=add(l,adj);
+    var days=Math.floor((today-start)/864e5);
+    if(days<0)return show('d-res','<span class="warn">That date is in the future. Please check it.</span>');
+    if(days>301)return show('d-res','<span class="warn">That date is too far in the past. Please check it.</span>');
+    var w=Math.floor(days/7),d=days%7,left=Math.round((edd-today)/864e5);
+    var tri=w<13?'First trimester':(w<28?'Second trimester':'Third trimester');
+    var h='<span class="big">'+fmt(edd)+'</span>Estimated due date.<ul>';
+    h+='<li><b>You are now:</b> '+w+' weeks '+d+' day'+(d===1?'':'s')+' pregnant ('+tri+')</li>';
+    h+='<li><b>Time left:</b> '+(left>0?left+' days to go':(left===0?'Due today':'Past due date. Please see your midwife.'))+'</li></ul>';
+    h+='<p style="margin-top:12px"><b>Suggested antenatal contacts</b> (WHO recommends at least 8):</p><ul>';
+    [['Before 12 weeks',12],['20 weeks',20],['26 weeks',26],['30 weeks',30],['34 weeks',34],['36 weeks',36],['38 weeks',38],['40 weeks',40]].forEach(function(x){
+      var dt=add(start,x[1]*7-(x[1]===12?7:0));
+      h+='<li>'+x[0]+': '+(x[1]===12?'by ':'around ')+fmt(dt)+(dt<today?' <small>(passed)</small>':'')+'</li>';
+    });
+    h+='</ul>';show('d-res',h);
+  };
 
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href*="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href.startsWith('#')) {
-                    e.preventDefault();
-                    const pageId = href.slice(1);
-                    if (pageId && document.getElementById(pageId)) {
-                        navigateTo(pageId);
-                    }
-                }
-            });
-        });
+  /* Kick counter */
+  var kc=0,kt=null,ki=null;
+  function fm(ms){var s=Math.floor(ms/1000),m=Math.floor(s/60);return m+' min '+String(s%60).padStart(2,'0')+' sec'}
+  $('k-tap').onclick=function(){
+    if(kc>=10)return;
+    if(!kt){kt=Date.now();ki=setInterval(function(){$('k-time').textContent='Elapsed: '+fm(Date.now()-kt)},1000)}
+    kc++;this.textContent=kc;
+    if(kc===10){clearInterval(ki);var t=Date.now()-kt;$('k-time').textContent='Done in '+fm(t);
+      show('k-res','You counted <b>10 movements in '+fm(t)+'</b>.'+(t>2*3600e3?' <span class="warn">That is longer than 2 hours. Please contact your midwife or health facility.</span>':' Keep tracking daily so you learn your baby\'s normal pattern.'))}
+  };
+  $('k-reset').onclick=function(){clearInterval(ki);kc=0;kt=null;$('k-tap').textContent='0';$('k-time').textContent='Tap to start the timer';$('k-res').className='res'};
 
-        // Donate Modal Functions
-        function openDonateModal() {
-            document.getElementById('donateModal').style.display = 'block';
-        }
+  /* BMI */
+  $('b-go').onclick=function(){
+    var w=num('b-w'),h=num('b-h');
+    if(!(w>0&&h>0))return show('b-res','<span class="warn">Please enter your weight and height.</span>');
+    var b=w/Math.pow(h/100,2),c=b<18.5?'Underweight':b<25?'Healthy weight':b<30?'Overweight':'Obese';
+    var lo=18.5*Math.pow(h/100,2),hi=24.9*Math.pow(h/100,2);
+    show('b-res','<span class="big">'+b.toFixed(1)+' &middot; '+c+'</span>Healthy weight range for your height: <b>'+lo.toFixed(1)+' to '+hi.toFixed(1)+' kg</b>.');
+  };
 
-        function closeDonateModal() {
-            document.getElementById('donateModal').style.display = 'none';
-        }
+  /* Water */
+  $('w-go').onclick=function(){
+    var w=num('w-w'),x=parseFloat($('w-s').value);
+    if(!(w>0))return show('w-res','<span class="warn">Please enter your weight.</span>');
+    var l=w*0.033+x;
+    show('w-res','<span class="big">About '+l.toFixed(1)+' litres a day</span>That is roughly '+Math.round(l*1000/250)+' cups of 250 ml, including water from food and other drinks.');
+  };
 
-        // Close modal when clicking outside of it
-        window.onclick = function(event) {
-            const modal = document.getElementById('donateModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-
-        // Process donation
-        function processDonation(event) {
-            event.preventDefault();
-            
-            const selectedAmount = document.querySelector('input[name="amount"]:checked').value;
-            const customAmount = document.getElementById('customAmount').value;
-            const finalAmount = customAmount ? customAmount : selectedAmount;
-
-            // Show confirmation
-            Swal.fire({
-                title: 'Thank You for Your Generosity!',
-                html: `<p style="color: #1E3A5F; font-size: 1.1rem; font-weight: 600;">Donation Amount: GHS ${finalAmount}</p><p style="color: #555;">You will be redirected to our secure payment gateway to complete your donation.</p>`,
-                icon: 'success',
-                confirmButtonColor: '#1E3A5F',
-                confirmButtonText: 'Proceed to Payment',
-                allowOutsideClick: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Here you would integrate with payment gateway like Stripe, PayPal, or Ghana-specific payment solutions
-                    console.log('Processing donation of GHS ' + finalAmount);
-                    
-                    // Simulate successful transaction
-                    Swal.fire({
-                        title: 'Payment Successful!',
-                        text: 'Thank you for your generous donation. Your receipt has been sent to your email.',
-                        icon: 'success',
-                        confirmButtonColor: '#1E3A5F'
-                    }).then(() => {
-                        closeDonateModal();
-                        document.getElementById('donateForm').reset();
-                    });
-                }
-            });
-        }
-
-        // Include SweetAlert2 for better modals
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
-        document.head.appendChild(script);
-    </script>
+  /* Hospital bag */
+  var items=['Antenatal / health record book','Health insurance (NHIS) card and ID','Comfortable clothes and a nightwear set','Sanitary pads for after birth','Underwear and breast-feeding bras','Slippers, towel and toiletries','Baby clothes, caps, socks and blankets','Baby diapers or soft cloths','Phone, charger and emergency contacts','Snacks and bottled water','Money for transport and small needs'];
+  var bag=$('bag');
+  items.forEach(function(t,i){
+    var d=document.createElement('label');d.style.cssText='display:flex;gap:10px;align-items:center;font-weight:500;margin:0 0 10px;cursor:pointer';
+    d.innerHTML='<input type="checkbox" style="width:20px;height:20px;margin:0;accent-color:#e8638c;flex:none"> <span>'+t+'</span>';
+    d.firstChild.onchange=upd;bag.appendChild(d);
+  });
+  function upd(){var n=bag.querySelectorAll('input:checked').length;$('bag-res').innerHTML='<b>'+n+' of '+items.length+'</b> packed'+(n===items.length?'. You are all set!':'')}
+  upd();
+})();
+</script>
 </body>
 </html>
